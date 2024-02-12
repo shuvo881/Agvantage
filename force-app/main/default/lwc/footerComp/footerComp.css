@@ -1,0 +1,5 @@
+@media screen and (max-width: 480px) {
+    .footerMargin{
+        margin-top: 0.5rem;
+    }
+}

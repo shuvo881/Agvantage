@@ -1,0 +1,16 @@
+.combo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: absolute center;
+    justify-content:space-between;
+    width: 20%;
+    position: right;
+    margin-bottom: 10px;
+    float: center;
+    margin: 50px 50px 50px 50px;
+}
+
+.textarea-height { 
+    --sds-c-textarea-sizing-min-height:350px;
+    
+}

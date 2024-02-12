@@ -1,0 +1,359 @@
+<aura:component controller="CreateContractSiteAsforStock" Implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader ">
+    <aura:attribute name="recordId" type="String" default="a02AD0000005ElVYAU" />
+    <aura:attribute name="saleOrigin" type="String" />
+    <aura:attribute name="accountList" type="AS_Commodity_Dest_for_Stock__c[]" default="[{ 'sobjectType': 'AS_Commodity_Dest_for_Stock__c',
+                                                                          'Site__c': '',
+                                                                          'Grade_Commodity_Destination__c': '',
+                                                                          'Quantity__c': '',
+                                                                          'Site_Price__c': '',
+                                                                          'Price_Offered__c': '',
+                                                                          'Price_Target__c': '',
+                                                                          'Sale_Origin_Destination__c': '' ,
+                                                                          'Stock__c':'',
+                                                                          'colSiteCss':'',
+                                                                          'colQuantityCss':'',
+                                                                          'colGradeCss':'',
+                                                                          'colPriceOfferedCss':'',
+                                                                          'colPriceTargetCss':'',
+                                                                          'colSitePriceCss':''}
+                                                                          ]"/> 
+    <aura:attribute name="commodityOptions" type="List" />
+    <aura:attribute name="gradeOptions" type="List" />
+    <aura:attribute name="baseSpread" type="List" />
+    <aura:attribute name="baseGrade" type="String" />
+    <aura:attribute name="baseSpreads" type="String" />
+    <aura:attribute name="baseNtpsite" type="String" />
+    <aura:attribute name="spreadDefaultVlue" type="String" default="base"/>
+
+    <aura:attribute name='showSpinner' type="boolean" default="false" />
+    <aura:handler name="init" action="{!c.init}" value="{!this}"/>
+    <aura:attribute name='isClicked' type="boolean" default="false" />
+    
+    <aura:attribute name='saleODType' type="String" default="Ex-Farm/FOT" />
+    <aura:attribute name='contractType' type="String" default="" />    
+
+
+    <aura:attribute name="priceOffered" type="Decimal"/>
+    <aura:attribute name="cssPriceOffered" type="String" default=""/>
+    
+    <aura:attribute name="priceTarget" type="Decimal"/>
+    <aura:attribute name="cssPriceTarget" type="String"/>
+
+    <aura:attribute name="ntpPrice" type="Decimal"/>
+    <aura:attribute name="siteQuantity" type="Decimal"/>
+    <aura:attribute name="cssSiteQuantity" type="String"/>
+
+    <aura:attribute name="ntptype" type="String" default=""/>
+    <aura:attribute name="selectedNtpData" type="Object" default="" description="selected NTP Record Details" />
+
+
+    
+
+    <aura:handler name="sCustomLookupData" event="c:sCustomLookupData" action="{!c.handleSiteDetails}"/>
+
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading" size="medium" variant="brand" style="position:fixed" />
+    </aura:if>
+    <aura:html tag="style">
+        .slds-modal__container{
+        max-width: 90% !important;
+        width:100% !important;
+        }
+    </aura:html>
+    <div>
+        <fieldset class="slds-box slds-theme--default slds-container--large" >
+            <legend id="newparticipantform" class="slds-text-heading--small 
+                                                   slds-p-vertical--medium">
+                Create Contract Sites {!v.saleODType}
+            </legend>
+            
+            <aura:if isTrue="{! v.saleODType == 'Ex-Farm/FOT'}">
+                
+                <h1 style="font-size:18px; margin: 10px;">The Create Contracts Site Object is NOT required.</h1>
+                
+            </aura:if>
+            
+            
+            <aura:if isTrue="{!v.saleODType == 'Nearest Terminal Port (NTP)'}">
+                
+                <div class="slds-grid slds-wrap">                
+                    <div class="slds-col slds-large-size_3-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+                        <c:sCustomLookupAsforStock  ntptype="ntpname" selectedntp="{!v.selectedNtpData.value}" recid="{!v.recordId}" index="1" objectName="Site__c" fieldName="Name" label="NTP Name" iconName="standard:account" placeholder="NTP Name" />                    
+                    </div>
+                </div>
+                
+                
+                <aura:if isTrue="{!v.spreadDefaultVlue == 'base'}">
+                    <div class="slds-grid slds-wrap">
+                    
+                        <div class="slds-col slds-large-size_3-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+                            <div style="display: inline-block;margin-right: 10px;">
+                                1
+                            </div>
+                            <div style="display: inline-block;">
+                                <c:sCustomLookupAsforStock ntptype="baseNtpsite" selectedData="{!v.baseNtpsite}" selectedntp="{!v.selectedNtpData.value}" recid="{!v.recordId}" index="{!index}" objectName="Site__c" fieldName="Name" label="Search Site" iconName="standard:account" placeholder="Serach Site ..." />
+                            </div>
+                            
+                        </div>
+
+                        <div class="{!'slds-col slds-large-size_1-of-12 slds-medium-size_1-of-12 slds-size_1-of-12 '+v.cssPriceOffered}">
+                            <lightning:input class="slds-m-around_none" aura:id="txtPriceOffered" type="number" name="priceOffered" value="{!v.priceOffered}" formatter="currency" step="0.01" placeholder="P Offered" label="Offered" onchange="{!c.handlePriceOfferedChange}"/>
+                        </div>
+                        <div class="{!'slds-col slds-large-size_1-of-12 slds-medium-size_1-of-12 slds-size_1-of-12'+ v.cssPriceTarget}">
+                            <lightning:input class="slds-m-around_none" aura:id="txtPriceTarget" type="number" name="priceTarget" value="{!v.priceTarget}" formatter="currency" step="0.01" placeholder="P Target" label="Target" onchange="{!c.handlePriceTargetChange}" />
+                        </div>
+
+                        <!-- <div class="slds-col slds-large-size_2-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+                            <lightning:input class="slds-m-around_none" type="number" step="0.01" name="ntpPrice" value="{!v.ntpPrice}" formatter="currency" placeholder="NTP Price" label="NTP Price"/>
+                        </div> -->
+                        <div class="slds-col slds-large-size_2-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+                            <lightning:input type="number" step="0.01"  name="quantity" value="{!v.siteQuantity}" placeholder="Site Quantity" style="min-width: 95px;" label="Site Quantity"/>
+                        </div>
+                        <div class="slds-col slds-large-size_2-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+                            
+                            <lightning:select aura:id="gradeBaseOptions" value="{!v.baseGrade}"  name="{!index}" label="Grade">       
+                                <option value="">Grade</option>
+                                <aura:iteration items="{!v.gradeOptions}" var="item" indexVar="index">
+                                    <option value="{!item.key}" selected="{!item.key==!v.baseGrade}" >{!item.value}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                        <div class="slds-col slds-large-size_2-of-12 slds-medium-size_1-of-12 slds-size_1-of-12">
+                            
+                            <lightning:select aura:id="baseSpreadOptions" value="{!v.baseSpreads}" name="{!index}" label="Spread">       
+                                <option value="">Spread</option>
+                                <aura:iteration items="{!v.baseSpread}" var="item" indexVar="index">
+                                    <option value="{!item.key}" selected="{!item.key==!v.baseSpreads}">{!item.value}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                    </div>
+                </aura:if>
+
+                
+                <div class="container-fluid">        
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_striped"> 
+                        <thead>
+                            <tr class="slds-text-title_caps"> 
+                                <th scope="col" style="margin-left: 0; max-width:10px !important;">
+                                    <div class="slds-truncate">#</div>
+                                </th>
+                                
+                                <th scope="col">
+                                    <lightning:layoutItem size="12">  <div class="slds-truncate" title="Site Price">Site</div>
+                                    </lightning:layoutItem> 
+                                </th>
+                                
+                                <th scope="col">
+                                    <lightning:layoutItem size="12">  <div class="slds-truncate" title="Commodity">Grade</div>
+                                    </lightning:layoutItem> </th>
+                                <th scope="col" >
+                                    <lightning:layoutItem size="12">  <div class="slds-truncate" title="Commodity">Spread</div></lightning:layoutItem>
+                                </th>
+                                
+                                <th scope="col"  style="margin-right: 10px; max-width:20px !important;">
+                                </th>
+                                
+                            </tr>
+                        </thead>   
+                        <tbody>      
+                            <aura:iteration items="{!v.accountList}" var="acc" indexVar="index">
+                                <tr id="{!index}"  aura:id="row">
+                                    <td>
+                                        <div style="margin-top:0px;margin-left: 0; max-width:10px !important;">
+                                            {!index + 2}
+                                        </div>
+                                    </td>
+                                    
+                                    <td>
+                                        <div class="{!acc.colSiteCss}" style="margin-top:0px; min-width:200px !important;"> 
+                                            
+                                            <c:sCustomLookupAsforStock ntptype="ntpsite" selectedData="{!acc.selectedSiteData}" selectedntp="{!v.selectedNtpData.value}" recid="{!v.recordId}" index="{!index}" objectName="Site__c" fieldName="Name" label="Search Site" iconName="standard:account" placeholder="Serach Site ..." />
+                                            
+                                        </div>
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                        <div class="{!acc.colGradeCss}">
+                                            <lightning:select aura:id="gradeOptions" value="{!acc.Grade_Commodity_Destination__c}" name="{!index}" onchange="{!c.gradeChange}">       
+                                                <option value="">Grade</option>
+                                                <aura:iteration items="{!v.gradeOptions}" var="item" indexVar="Grade_Commodity_Destination__c">
+                                                    <option value="{!item.key}" selected="{!item.key==acc.Grade_Commodity_Destination__c}">{!item.value}</option>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                        </div>                                      
+                                        
+                                        
+                                    </td>
+                                    
+                                    <td>
+                                        <div style="margin-top:0px; min-width:95px !important;">
+                                            <lightning:input type="text" name="spread" value="{!acc.Spreads__c}"  placeholder="Spread" />
+                                        </div>
+                                    </td>
+                                    
+                                    <td>
+                                        <a onclick="{!c.removeRow}" data-record="{!index}">
+                                            <lightning:icon iconName="utility:delete" size="small" alternativeText="Delete"/>
+                                            <span class="slds-assistive-text">Delete</span>
+                                        </a>
+                                    </td> 
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </aura:if>
+            
+            <aura:if isTrue="{! and(v.saleODType != 'Ex-Farm/FOT', v.saleODType != 'Nearest Terminal Port (NTP)')}">
+                
+                <div class="container-fluid">        
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_striped"> 
+                        <thead>
+                            <tr class="slds-text-title_caps"> 
+                                <th scope="col" style="margin-left: 0; max-width:10px !important;">
+                                    <div class="slds-truncate">#</div>
+                                </th>
+                                <th scope="col">
+                                    <lightning:layoutItem size="12">  <div class="slds-truncate" title="Site">Site</div>
+                                    </lightning:layoutItem> </th>
+                                
+                                <th scope="col">
+                                    <lightning:layoutItem size="12">  <div class="slds-truncate" title="Site Price">Site Price</div>
+                                    </lightning:layoutItem>
+                                 </th>
+                                 
+                                 <th scope="col">
+                                    <lightning:layoutItem size="12">  <div class="slds-truncate" title="Site Price">Price Offered</div>
+                                    </lightning:layoutItem>
+                                 </th>
+
+                                 <th scope="col">
+                                    <lightning:layoutItem size="12">  <div class="slds-truncate" title="Site Price">Price Target</div>
+                                    </lightning:layoutItem>
+                                 </th>
+                                
+                                <th scope="col">
+                                    <lightning:layoutItem size="12">  <div class="slds-truncate" title="Quantity">Quantity</div>
+                                    </lightning:layoutItem> </th>
+                                <th scope="col"  style="margin-right: 10px; max-width:20px !important;">
+                                    Grade
+                                </th>
+                                <th scope="col"  style="margin-right: 10px; max-width:20px !important;">
+                                    Spreads
+                                </th>
+                            </tr>
+                        </thead>   
+                        <tbody>      
+                            <aura:iteration items="{!v.accountList}" var="acc" indexVar="index">
+                                <tr id="{!index}" aura:id="row" >
+                                    <td>
+                                        <div style="margin-top:0px;margin-left: 0; max-width:10px !important;">
+                                            {!index + 1}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="{!acc.colSiteCss}" style="margin-top:0px; min-width:200px !important;"> 
+                                            
+                                            <c:sCustomLookupAsforStock ntptype="nonntp" selectedData="{!acc.selectedSiteData}" recid="{!v.recordId}" index="{!index}" objectName="Site__c" fieldName="Name" iconName="standard:account" placeholder="Serach Site ..." />
+                                            
+                                        </div>
+                                    </td>
+                                    
+                                    <td>
+                                        <div  style="margin-top:0px; min-width:95px !important;">
+                                            <lightning:input type="number" name="price" value="{!acc.Site_Price__c}" formatter="currency" step="0.01"  placeholder="Price" />
+                                        </div>
+                                    </td>
+                                    
+                                    
+                                    <td>
+                                        <div  style="margin-top:0px; min-width:95px !important;" class="{!acc.colPriceOfferedCss}">
+                                            <lightning:input type="number" name="price" value="{!acc.Price_Offered__c}" formatter="currency" step="0.01"  placeholder="Price Offered" autocomplete="false" />
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div  style="margin-top:0px; min-width:95px !important;" class="{!acc.colPriceOfferedCss}">
+                                            <lightning:input type="number" name="price" value="{!acc.Price_Target__c}" formatter="currency" step="0.01"  placeholder="Price Target" autocomplete="false"/>
+                                        </div>
+                                    </td>
+
+
+
+
+
+
+                                    <!-- <div class="{!'slds-col slds-large-size_1-of-12 slds-medium-size_1-of-12 slds-size_1-of-12 '+v.cssPriceOffered}">
+                                        <lightning:input class="slds-m-around_none" aura:id="txtPriceOffered" type="number" name="priceOffered" value="{!v.priceOffered}" formatter="currency" step="0.01" placeholder="P Offered" label="Pri Offered" onchange="{!c.handlePriceOfferedChange}"/>
+                                    </div>
+                                    <div class="{!'slds-col slds-large-size_1-of-12 slds-medium-size_1-of-12 slds-size_1-of-12'+ v.cssPriceTarget}">
+                                        <lightning:input class="slds-m-around_none" aura:id="txtPriceTarget" type="number" name="priceTarget" value="{!v.priceTarget}" formatter="currency" step="0.01" placeholder="P Target" label="Price Target" onchange="{!c.handlePriceTargetChange}" />
+                                    </div> -->
+
+                                    
+                                    <td>
+                                        <div class="{!acc.colQuantityCss}" style="margin-top:0px; min-width:95px !important;"> 
+                                            <lightning:input type="number" step="0.01" value="{!acc.Quantity__c}" name="quantity" style="min-width: 95px; !important;"  placeholder="Quantity"  />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        
+                                        <div class="{!acc.colGradeCss}">
+                                            
+                                            <lightning:select aura:id="gradeOptions" value="{!acc.Grade_Commodity_Destination__c}" onchange="{!c.gradeChange}">       
+                                                <option value="">Grade</option>
+                                                <aura:iteration items="{!v.gradeOptions}" var="item" indexVar="index">
+                                                    <option value="{!item.key}" selected="{!item.key==acc.Grade_Commodity_Destination__c}">{!item.value}</option>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                        </div>                                      
+                                        
+                                        
+                                    </td>
+                                    
+                                    <td>
+                                        <div style="margin-top:0px; min-width:95px !important;">
+                                            <lightning:input type="text" name="spread" value="{!acc.Spreads__c}"  placeholder="Spread" />
+                                        </div>
+                                    </td>
+                                    
+                                    
+                                    <td>
+                                        <a onclick="{!c.removeRow}" data-record="{!index}">
+                                            <lightning:icon iconName="utility:delete" size="small" alternativeText="Delete"/>
+                                            <span class="slds-assistive-text">Delete</span>
+                                        </a>
+                                    </td> 
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </aura:if>
+            
+        </fieldset>
+    </div>
+
+    <aura:if isTrue="{! v.saleODType != 'Ex-Farm/FOT'}">
+
+        <footer class="slds-modal__footer">
+
+            <center>
+                <lightning:button variant="brand" disabled="{!v.showSpinner}" label="Create Contract Sites" class="slds-m-top--small"  onclick="{!c.save}" />
+                <lightning:button variant="destructive" label="Cancel" class="slds-m-top--small"   onclick="{! c.closeModel }"/>
+                <lightning:button variant="neutral" disabled="{!v.showSpinner}" label="Add Row" class="slds-m-top--small"  onclick="{!c.addRow}" />
+                <lightning:button variant="brand-outline" disabled="{!v.showSpinner}" label="Add Row Duplicate Site" class="slds-m-top--small"  onclick="{!c.addRowDuplicateSite}" />
+                
+            </center>
+
+            
+        </footer>
+    
+    </aura:if>
+
+</aura:component>

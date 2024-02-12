@@ -1,0 +1,98 @@
+<template>
+    <lightning-spinner if:true={isLoading} alternative-text="Loading" size="Medium"></lightning-spinner>
+    
+         <div class="slds-grid slds-wrap" style="border: 1px solid #ddd;">
+         <div class="slds-col slds-size_12-of-12" style="padding-top: 5px; padding-bottom: 8px">
+         
+            <lightning-layout multiple-rows horizontal-align="spread">
+                <!-- <div style="width: 100%">
+                    <lightning-combobox label="Contacts" options={contactListViews} value={data}
+                        onchange={handleComboChange} style="min-width: 100%"></lightning-combobox>
+                </div> -->
+                <div class="slds-card slds-p-around_medium" style="width: 100%;">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <lightning-input label="Contacts" type="search" onfocus={showPicklistOptions}
+                                onchange={search} value={selectedSearchResult}>
+                            </lightning-input>
+                            <div if:true={searchResults} class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
+                                role="listbox">
+                                <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                    <template for:each={searchResults} for:item="searchResult">
+                                        <li key={searchResult.value} data-value={searchResult.value} role="presentation"
+                                            onclick={selectSearchResult} class="slds-listbox__item">
+                                            <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small "
+                                                role="option">
+                                                <span class="slds-media__body">
+                                                    <span class="slds-truncate" title={searchResult.label}>
+                                                        {searchResult.label}
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-layout>
+        </div> 
+        
+           
+
+
+        <template if:false={isLoading}>
+    
+            <div class="slds-col slds-size_6-of-12">
+                <template if:true={showContData}>
+                    <lightning-card title="Contact List">
+                        <lightning-datatable key-field="Id" data={data} columns={contactColumns} selected-rows=true
+                            onrowselection={handleRowSelection}>>
+                        </lightning-datatable>
+                    </lightning-card>
+                </template>
+            </div>
+
+            <div class="slds-col slds-size_6-of-12 ">
+                <template if:false={showTemplateData}>
+                <template if:true={showSmsData}>
+                    <div class="slds-col slds-size_12-of-12">
+                        <lightning-card title="Bid Data">
+                            <lightning-datatable key-field="Id" data={bidData} columns={bidDataColumns} selected-rows=true
+                                onrowselection={handleBidDataSelection}>
+                            </lightning-datatable>
+                        </lightning-card>
+                    </div>
+                </template>
+                <template if:true={showSmsData}>
+                    <lightning-card title="Contact No.">
+                        <div class="slds-p-around_medium ">
+                            <lightning-textarea class="textarea-height" maxlength="700" onchange={handleCharacterChange} oninput={handleCharacterChange} label="Message Body" value={msgBody} readonly></lightning-textarea>
+                            <div style="padding: 8px;
+                            box-sizing: border-box;">Character Count: {characterCount}</div>
+                            <lightning-button label="Next" variant="brand" onclick={handleGoNext}></lightning-button>
+                        </div>
+                    </lightning-card></template>
+                    </template>
+                    
+                    <template if:true={showTemplateData}>
+                    <lightning-card title="Template Selection.">
+                        <div class="slds-p-around_medium ">
+                            
+                            <lightning-combobox label="SMS Template" options={templateOptions} multi-select="true" onchange={handleTemplateOptions} ></lightning-combobox>
+                            <template if:true={viewFinalData}>
+                                <lightning-textarea class="textarea-height" maxlength="700" onchange={handleTemplateCharacterChange} oninput={handleTemplateCharacterChange} label="Message Template" value={msgTemplateBody}></lightning-textarea>
+            
+                            <lightning-button label="Submit" variant="brand" onclick={handleSendSMS}></lightning-button>
+                        </template>
+                        </div>
+                    </lightning-card></template>
+
+                    
+            </div>
+        </template>
+    </div>
+    
+   
+</template>

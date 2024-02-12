@@ -1,0 +1,145 @@
+<template>
+    <div class="card-title" align="center"><p><b>Create Stock</b></p></div>     
+    <div style="padding: 25px;"> 
+
+        <lightning-record-edit-form object-api-name="Stock__c"
+                                    onsubmit={handleSubmit}
+                                    
+                                    onload={handleLoad}
+                                    columns="2"
+                                    mode="edit"
+                                    
+        > 
+        <div class="card"><p>Information</p></div>     
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                <!-- <lightning-input-field field-name="Name" value={tradeName} label="Stock" ></lightning-input-field> -->
+                <lightning-input-field field-name="IsDeleted__c" value={sellerAccName} label="IsDeleted" ></lightning-input-field>
+                <lightning-input-field field-name="Name__c" value={Name__c} label="Name" ></lightning-input-field>
+
+                <lightning-input-field field-name="CreatedDate__c" value={stage} label="CreatedDate" ></lightning-input-field>
+                <lightning-input-field field-name="LastModifiedDate__c" value={spreads} label="LastModifiedDate"></lightning-input-field>
+                <lightning-input-field field-name="SystemModstamp__c" value={tradeName} label="SystemModstamp" ></lightning-input-field>
+                <lightning-input-field field-name="LastActivityDate__c" value={sellerAccName} label="LastActivityDate" ></lightning-input-field>
+                <lightning-input-field field-name="LastViewedDate__c" value={LastViewedDate__c} label="LastViewedDate" ></lightning-input-field>
+                <lightning-input-field field-name="LastReferencedDate__c" value={stage} label="LastReferencedDate" ></lightning-input-field>
+                <lightning-input-field field-name="Last_Bid_Date__c" value={spreads} label="Last Bid Date"></lightning-input-field>
+                <lightning-input-field field-name="Protein__c" value={tradeName} label="Protein" ></lightning-input-field>
+                <lightning-input-field field-name="Quantity__c" value={sellerAccName} label="Quantity" ></lightning-input-field>
+                <lightning-input-field field-name="Price_Target__c" value={Price_Target__c} label="Price Target" ></lightning-input-field>
+
+                <lightning-input-field field-name="Last_Bid__c" value={stage} label="Last Bid" ></lightning-input-field>
+                <lightning-input-field field-name="Comments__c" value={spreads} label="Comments"></lightning-input-field>
+                <lightning-input-field field-name="Screenings__c" value={tradeName} label="Screenings" ></lightning-input-field>
+                <lightning-input-field field-name="Test_Weight__c" value={sellerAccName} label="Test Weight" ></lightning-input-field>
+                <lightning-input-field field-name="Moisture__c" value={Moisture__c} label="Moisture" ></lightning-input-field>
+                <lightning-input-field field-name="Oil__c" value={stage} label="Oil" ></lightning-input-field>
+                <lightning-input-field field-name="Admix__c" value={spreads} label="Admix"></lightning-input-field>
+                <lightning-input-field field-name="Falling_Number__c" value={tradeName} label="Falling Number" ></lightning-input-field>
+                <lightning-input-field field-name="Defectives__c" value={sellerAccName} label="Defectives" ></lightning-input-field>
+                <lightning-input-field field-name="Foreign_Seeds__c" value={Foreign_Seeds__c} label="Foreign Seeds" ></lightning-input-field>
+                <lightning-input-field field-name="Foreign_Material__c" value={stage} label="Foreign Material" ></lightning-input-field>
+                <lightning-input-field field-name="Other_Contaminants__c" value={spreads} label="Other Contaminants"></lightning-input-field>
+
+                <lightning-input-field field-name="Purity__c" value={stage} label="Purity" ></lightning-input-field>
+                <lightning-input-field field-name="Retention__c" value={spreads} label="Retention"></lightning-input-field>
+                <lightning-input-field field-name="Mould__c" value={tradeName} label="Mould" ></lightning-input-field>
+                <lightning-input-field field-name="Poor_Colour__c" value={sellerAccName} label="Poor Colour" ></lightning-input-field>
+                <lightning-input-field field-name="Unmillable_Material__c" value={Unmillable_Material__c} label="Unmillable Material" ></lightning-input-field>
+                <lightning-input-field field-name="Size__c" value={stage} label="Size" ></lightning-input-field>
+                <lightning-input-field field-name="Sale_Origin_Destination__c" value={spreads} label="Sale Origin Destination"></lightning-input-field>
+                <lightning-input-field field-name="Variety__c" value={tradeName} label="Variety" ></lightning-input-field>
+                <lightning-input-field field-name="Delivery_Period_Start__c" value={sellerAccName} label="Delivery Period Start" ></lightning-input-field>
+                <lightning-input-field field-name="Delivery_Period_End__c" value={Delivery_Period_End__c} label="Delivery Period End" ></lightning-input-field>
+                <lightning-input-field field-name="Preferred_Selling_Date__c" value={stage} label="Preferred Selling Date" ></lightning-input-field>
+                <lightning-input-field field-name="Grade_Spreads__c" value={spreads} label="Grade Spreads"></lightning-input-field>
+
+                
+                <lightning-input-field field-name="Broker_Consultant_Rep__c" value={stage} label="Broker/Consultant Rep" ></lightning-input-field>
+                <lightning-input-field field-name="Price_Offered__c" value={spreads} label="Price Offered"></lightning-input-field>
+                <lightning-input-field field-name="Business_Credited_to__c" value={tradeName} label="Business Credited to" ></lightning-input-field>
+                <lightning-input-field field-name="Sales_Type__c" value={sellerAccName} label="Sales Type" ></lightning-input-field>
+                <lightning-input-field field-name="Increments__c" value={Increments__c} label="Increments" ></lightning-input-field>
+                <lightning-input-field field-name="GST_Type__c" value={stage} label="GST Type" ></lightning-input-field>
+                <lightning-input-field field-name="Recipient_Created_Tax_Invoice__c" value={spreads} label="Recipient Created Tax Invoice"></lightning-input-field>
+                <lightning-input-field field-name="Vendor_Declarations__c" value={tradeName} label="Vendor Declarations" ></lightning-input-field>
+                <lightning-input-field field-name="Grade2__c" value={sellerAccName} label="Grade" ></lightning-input-field>
+                <lightning-input-field field-name="Weight_Terms__c" value={Weight_Terms__c} label="Weight Terms" ></lightning-input-field>
+                <lightning-input-field field-name="Transfer_to_be_done_by__c" value={stage} label="Transfer to be done by" ></lightning-input-field>
+                <lightning-input-field field-name="Rules_and_Arbitration__c" value={spreads} label="Rules and Arbitration"></lightning-input-field>
+
+                <lightning-input-field field-name="Grade_Standards__c" value={stage} label="Grade Standards" ></lightning-input-field>
+                <lightning-input-field field-name="Expiry_Date_and_Time__c" value={spreads} label="Expiry Date and Time"></lightning-input-field>
+                <lightning-input-field field-name="Free_on_Board_FOB__c" value={tradeName} label="Free on Board FOB" ></lightning-input-field>
+                <lightning-input-field field-name="AgVantage_Acting_as__c" value={sellerAccName} label="AgVantage Acting as" ></lightning-input-field>
+                <lightning-input-field field-name="Contract_Type_picklist__c" value={Contract_Type_picklist__c} label="Contract Type" ></lightning-input-field>
+                <lightning-input-field field-name="GTA_Contract_Number__c" value={stage} label="GTA Contract Number" ></lightning-input-field>
+                <lightning-input-field field-name="Contract_Type__c" value={spreads} label="Contract Type"></lightning-input-field>
+                <lightning-input-field field-name="Contract_Price_per_Unit__c" value={tradeName} label="Contract Price per Unit" ></lightning-input-field>
+                <lightning-input-field field-name="Spreads__c" value={sellerAccName} label="Spreads" ></lightning-input-field>
+                <lightning-input-field field-name="Commodity_Origin__c" value={Commodity_Origin__c} label="Commodity Origin" ></lightning-input-field>
+                <lightning-input-field field-name="Free_in_Store_FIS__c" value={stage} label="Free in Store FIS" ></lightning-input-field>
+                <lightning-input-field field-name="Carry_Amount__c" value={spreads} label="Carry Amount"></lightning-input-field>
+
+                
+                <lightning-input-field field-name="Unit_of_Time__c" value={stage} label="Unit of Time" ></lightning-input-field>
+                <lightning-input-field field-name="Carry_Date_Start__c" value={spreads} label="Carry Date Start"></lightning-input-field>
+                <lightning-input-field field-name="Carry_Date_End__c" value={tradeName} label="Carry Date End" ></lightning-input-field>
+                <lightning-input-field field-name="Area_Hectares__c" value={sellerAccName} label="Area Hectares" ></lightning-input-field>
+                <lightning-input-field field-name="Yield_units_per_ha_max__c" value={Yield_units_per_ha_max__c} label="Yield units per ha max" ></lightning-input-field>
+                <lightning-input-field field-name="Yield_units_per_ha_min__c" value={stage} label="Yield units per ha min" ></lightning-input-field>
+                <lightning-input-field field-name="Freight__c" value={spreads} label="Freight"></lightning-input-field>
+                <lightning-input-field field-name="A_Mortgage__c" value={tradeName} label="A Mortgage" ></lightning-input-field>
+                <lightning-input-field field-name="Regist_or_Unregist_Security_Interest__c" value={sellerAccName} label="Regist or Unregist Security Interest" ></lightning-input-field>
+                <lightning-input-field field-name="Encumbrance_or_Lien__c" value={Encumbrance_or_Lien__c} label="Encumbrance, or Lien" ></lightning-input-field>
+                <lightning-input-field field-name="Plant_Breeders_Rights__c" value={stage} label="Plant Breeders Rights" ></lightning-input-field>
+                <lightning-input-field field-name="End_Point_Royalties_Liabilities__c" value={spreads} label="End Point Royalties Liabilities"></lightning-input-field>
+
+                <lightning-input-field field-name="Disclosures_Details__c" value={stage} label="Disclosures Details" ></lightning-input-field>
+                <lightning-input-field field-name="Condition__c" value={spreads} label="Condition"></lightning-input-field>
+                <lightning-input-field field-name="Account__c" value={sellerTradeName} label="Sellers Trading Name"></lightning-input-field>
+                <lightning-input-field field-name="Commodity__c" value={sellerAccName} label="Commodity" ></lightning-input-field>
+                <lightning-input-field field-name="Conditions__c" value={Conditions__c} label="Conditions" ></lightning-input-field>
+                <lightning-input-field field-name="Crop_Year__c" value={stage} label="Crop Year" ></lightning-input-field>
+                <lightning-input-field field-name="Delivery_Terms__c" value={spreads} label="Delivery Terms"></lightning-input-field>
+                <lightning-input-field field-name="Discount__c" value={tradeName} label="Discount" ></lightning-input-field>
+                <lightning-input-field field-name="Seller_Representative__c" value={sellerRep} label="Seller Representative" ></lightning-input-field>
+                <lightning-input-field field-name="Farm_Location__c" value={Farm_Location__c} label="Farm Name" ></lightning-input-field>
+                <lightning-input-field field-name="Grade1__c" value={stage} label="Grade1" ></lightning-input-field>
+                <lightning-input-field field-name="LastModifiedBy__c" value={spreads} label="Last Modified By"></lightning-input-field>
+
+                
+                <lightning-input-field field-name="Original_AS_Record__c" value={stage} label="Original AS Record" ></lightning-input-field>
+                <lightning-input-field field-name="Payment_Terms__c" value={spreads} label="Payment Terms"></lightning-input-field>
+                <lightning-input-field field-name="Premium__c" value={tradeName} label="Premium" ></lightning-input-field>
+                <lightning-input-field field-name="Site_Available_Stocks__c" value={sellerAccName} label="Site - Available Stocks" ></lightning-input-field>
+                <lightning-input-field field-name="Status__c" value={Status__c} label="Status" ></lightning-input-field>
+                <lightning-input-field field-name="Tolerance__c" value={stage} label="Tolerance" ></lightning-input-field>
+                
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                <lightning-input-field field-name="OwnerId" value={owner} label="Owner"></lightning-input-field>
+              
+
+                </div>
+        </div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-2" style="margin-right:20px;" align="right" >
+                    <button
+                    class=" slds-button slds-button_brand"
+                    type="button"
+                    onclick={handleClose}>Cancel
+                </button>     
+            </div>
+            <div class="slds-col slds-size_1-of-2" align="left">
+
+                    <button
+                    class="slds-button slds-button_brand"
+                    type="submit"
+                   >Save
+                </button>        
+            </div>
+    </div>
+ </lightning-record-edit-form>
+    </div>
+</template>

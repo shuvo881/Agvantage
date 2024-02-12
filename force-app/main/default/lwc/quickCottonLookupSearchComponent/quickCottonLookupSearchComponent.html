@@ -1,0 +1,22 @@
+<template>
+    <div class={errorDetails.errorClass}>
+            <label class="slds-form-element__label" for="text-input-id-48">
+                <template if:true={isRequired}>
+                    <abbr class="slds-required" title="required">* </abbr>
+                </template>
+                {label}
+            </label>
+
+            <div class="slds-form-element__control">
+                <lightning-input variant="label-hidden" 
+                    label="Search Record" value={searchKey} type="search"
+                    onchange={handleChange} placeholder={placeholder}>
+                </lightning-input> 
+            </div>
+            
+
+            <template if:true={errorDetails.isError}>
+                <div class="slds-form-element__help" id="error-message-id-49">{errorDetails.errorMessage}</div>
+            </template>
+    </div>
+</template>

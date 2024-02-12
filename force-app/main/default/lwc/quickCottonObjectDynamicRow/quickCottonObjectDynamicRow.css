@@ -1,0 +1,21 @@
+.slds-p-around_x-small {padding: 0px !important;}
+.date_input {margin-top: 17px;}
+.action_margin{margin-top: 17px;}
+
+.slds-form-element_compound .slds-form-element{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.action_margin1{
+    margin-top: 0px;
+}
+.add_site_button{
+    margin-top: 17px;
+}
+
+.pricechange{
+    margin-top: -5px;
+}
+.price_year{
+    text-align: center;
+}

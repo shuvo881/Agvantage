@@ -1,0 +1,31 @@
+@IsTest(seeAllData=true)
+private class BulkBidControllerTest {
+    @IsTest
+    static void testGetAllBidsByBuyerId() {
+        Bid__c testBid = [SELECT Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Site__c, Bidders_Contact__c, Buyer_Name__c, Commodity__c, Crop_Year__c, Default_Country__c, Default_Date_Time__c, Delivery_End_Date__c, Delivery_Start_Date__c, Grade__c, LastModifiedById__c, Price__c, Sale_Origin_Destination__c, Farming_Region_Name__c, buyer_field_formula_field__c,  Price_Tag_Name__c, Name__c, Grade_Short_Name__c, Commodity_Short_Name__c, Todays_date__c, Buyer_Name_Text__c FROM Bid__c limit 1]; 
+		
+        String buyerId = testBid.Buyer_Name__c;
+        String rand = '526562356';
+        BulkBidController.getAllBidsByBuyerId(buyerId, rand, true, false);
+       
+        List<Bid__c> bidList = new List<Bid__c>();
+
+
+        BulkBidController.saveData(JSON.serialize(bidList),rand,  datetime.now());
+
+        // List<String> samplePicklist = new List<String>();
+        // samplePicklist.add('Commodity__c');
+        // samplePicklist.add('Grade__c');
+        // samplePicklist.add('Crop_Year__c');
+        // String getAllPickListOptionsTest = SMSDashboardController.getAllPickListOptions(JSON.serialize(samplePicklist));
+
+        // samplePicklist = new List<String>();
+        // samplePicklist.add('a1ABn0000008ecJMAQ');
+        // samplePicklist.add('a1ABn0000008ebnMAA');
+        // samplePicklist.add('a1ABn0000008ecHMAQ');
+        // SMSDashboardController.insertBidIdsToCustomSettingsApex(JSON.serialize(samplePicklist));
+        
+        BulkBidController.updateExludedData(testBid.Id, rand);
+         BulkBidController.getAllSelectedBids(testBid.Id, rand);
+    }
+}

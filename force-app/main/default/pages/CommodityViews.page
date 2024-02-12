@@ -1,0 +1,101 @@
+<apex:page controller="CommodityViews" action="{!init}" showHeader="false" applyBodyTag="false" applyHtmlTag="false"  standardStylesheets="false" docType="html-5.0">
+    <html>
+        <head>
+            <title>Commodity View</title>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>          
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>            
+            <script src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
+
+            <style>
+                td.highlightRed {
+                    font-weight: bold;
+                    color: red;
+                }
+                td.highlightGreen {
+                    font-weight: bold;
+                    color: green;
+                }
+                body {
+                    margin: 0;                    
+                    font-size: 1rem;
+                    font-weight: 400;
+                    line-height: 1;                    
+                }
+            </style>
+        </head>
+        <body>                
+            <div class="text-center">
+                <div class="grid_16">
+                    <div class="fl">
+                        <a href="https://agvantagecommodities.com.au/" title="AgVantage Commodities" class="logo a-reset">
+                            <img src="https://agvantagecommodities.com.au/wp-content/uploads/2012/05/AgVantage-Logo1.png" alt="AgVantage Commodities" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="container">
+                <table id="dataTable" class="table table-bordered table-hover" style="width: 100%;">
+                    <thead>
+                        
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>                    
+                </table>
+            </div>
+
+            <script>
+                var arrDataTableVal = [];
+                var dataTableValue;
+                
+                dataTableValue = JSON.parse('{!JSENCODE(strDataTable)}');
+
+                for (index = 0; index < dataTableValue.length; index++) {
+                    var sDataValue = dataTableValue[index]
+                    var CommVal = [sDataValue.strCommodity, sDataValue.strInstrument,sDataValue.srtContract,sDataValue.dLast,
+                    sDataValue.dPrevious,sDataValue.strChange,sDataValue.strChangePer,sDataValue.strYTDHigh,sDataValue.strYTDLow,
+                    sDataValue.strBasisUSD,sDataValue.strBasisAUD,sDataValue.strUSDUOM,sDataValue.strAUDUOM];
+                    arrDataTableVal.push(CommVal);
+                }               
+
+                $(document).ready(function() {
+                    $('#dataTable').DataTable( {
+                        data: arrDataTableVal,
+                        columns: [
+                            { title: "Commodity" },
+                            { title: "Instrument" },
+                            { title: "Contract" },
+                            { title: "Last" },
+                            { title: "Previous" },
+                            { title: "Change" },
+                            { title: "Change %" },
+                            { title: "YTD High" },
+                            { title: "YTD Low" },
+                            { title: "Basis USD" },
+                            { title: "Basis AUD" },
+                            { title: "USD UOM" },
+                            { title: "AUD UOM" }
+                        ],
+                        "createdRow": function ( row, data, index ) {
+                            if ( data[5].startsWith('-')) {
+                                $('td', row).eq(5).addClass('highlightRed');
+                                $('td', row).eq(6).addClass('highlightRed');
+                            }
+                            else if ( data[5].startsWith('+')) {
+                                $('td', row).eq(5).addClass('highlightGreen');
+                                $('td', row).eq(6).addClass('highlightGreen');
+                            }
+                        }
+                    } );
+                });
+            </script>
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,186 @@
+<apex:page standardController="Contact" standardStylesheets="false" recordSetVar="cons" extensions="SendStockEmailCtrl">
+    <apex:slds />
+    <html>
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <apex:stylesheet value="{!URLFOR($Resource.Questionnaire, '/styles/salesforce-lightning-design-system.min.css')}" />
+
+        <apex:includeLightning />
+
+
+    </head>
+
+    <body style="background: #fff !important;">
+
+
+
+        <div style="width: 100%; margin: 0px auto; padding: 10px;">
+
+            <input type="hidden" value="{!conIds}" id="conIds" />
+
+            <select onchange="commodityChanged()" id="commodityElement" class="slds-select">
+                <option value="all">All</option>
+                <apex:repeat value="{!CommodityList}" var="commodity">
+                    <option value="{!commodity}">{!commodity}</option>
+                </apex:repeat>
+            </select>
+
+        </div>
+
+
+        <apex:form >
+
+            <div style="width: 100%; margin: 0px auto; padding: 10px;">
+
+                <apex:pageBlock >
+
+                    <apex:pageBlockSection rendered="{!isEmailSent}">
+
+
+                        <div class="demo-only" style="height:4rem">
+                            <div class="slds-notify_container slds-is-relative">
+                                <div class="slds-notify slds-notify_toast slds-theme_success" role="status">
+                                    <span class="slds-assistive-text">success</span>
+
+                                    <div class="slds-notify__content">
+                                        <h2 class="slds-text-heading_small ">The email(s) are sent successfully!</h2>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </apex:pageBlockSection>
+
+                </apex:pageBlock>
+
+
+                <apex:pageBlock >
+                    <apex:pageBlockTable id="StockListTable" value="{!allStocks}" var="s" style="width: 100%; border: 1px solid #ccc;" styleClass="slds-table slds-table_cell-buffer slds-table_bordered">
+
+
+
+                        <apex:column width="20">
+
+                            <apex:facet name="header">
+                                <apex:outputPanel >
+                                    <apex:outputText value="">
+                                        <apex:inputCheckbox value="{!s.checked}" onclick="selectAllCheckboxes(this,'inputId')" />
+                                    </apex:outputText>
+                                </apex:outputPanel>
+                            </apex:facet>
+
+                            <apex:inputCheckbox value="{!s.checked}" onclick="selectSingleCheckBox(this,'inputId')" />
+                        </apex:column>
+
+
+                        <apex:column value="{!s.Name}">
+                            <apex:facet name="header">
+                                <apex:outputPanel >
+                                    <apex:outputText value="Name"></apex:outputText>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:column>
+                        <apex:column value="{!s.Grade}">
+                            <apex:facet name="header">
+                                <apex:outputPanel >
+                                    <apex:outputText value="Grade"></apex:outputText>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:column>
+                        <apex:column value="{!s.SellerTradingName}">
+                            <apex:facet name="header">
+                                <apex:outputPanel >
+                                    <apex:outputText value="Seller Trading Name"></apex:outputText>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:column>
+                        <apex:column value="{!s.SellerRepresentative}">
+                            <apex:facet name="header">
+                                <apex:outputPanel >
+                                    <apex:outputText value="Seller Representative"></apex:outputText>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    <br/>
+
+
+                </apex:pageBlock>
+
+                <apex:pageBlock >
+
+                    <apex:commandButton value="Send Email" action="{!processEmail}" styleClass="slds-button slds-button_brand slds-button_full-width"
+                        style="width: 100px; border: 1px solid #ccc; padding: 8px 15px; color: #fff; background: #0176d3;" />
+
+                </apex:pageBlock>
+
+            </div>
+
+
+
+            <br />
+            <br />
+            <br />
+
+            <!-- <apex:pageBlock title="Selected">
+            
+            <apex:pageBlockSection >
+            
+                <apex:outputPanel  layout="block">
+                   <apex:outputText value="{!selectedStocks}"/>
+                   <apex:outputText value="{!conIds}"/>
+                 </apex:outputPanel>
+            
+             </apex:pageBlockSection>
+            </apex:pageBlock> -->
+
+        </apex:form>
+
+        <script>
+
+            document.getElementById("commodityElement").value = "{!CommoditySelectedValue}";
+
+
+            function commodityChanged() {
+                console.log('commodityChanged');
+                window.location.href = window.location.origin + '/apex/SendStockEmail?conIds=' + document.getElementById("conIds").value + '&commodity=' + document.getElementById("commodityElement").value;
+
+            }
+
+            function selectSingleCheckBox(obj, receivedInputID) {
+                // alert("bye");
+                console.log('obj-->', obj);
+                console.log('receivedInputID-->', receivedInputID);
+
+                var inputCheckBox = document.getElementsByTagName("input");
+                console.log('selectAllCheckboxes-->', inputCheckBox);
+                for (var i = 0; i < inputCheckBox.length; i++) {
+                    if (inputCheckBox[i].id.indexOf(receivedInputID) != -1) {
+                        console.log('input check box-->', inputCheckBox[i]);
+                        inputCheckBox[i].checked = obj.checked;
+                    }
+                }
+            }
+
+            function selectAllCheckboxes(obj, receivedInputID) {
+                var inputCheckBox = document.getElementsByTagName("input");
+                for (var i = 0; i < inputCheckBox.length; i++) {
+                    if (inputCheckBox[i].type == 'checkbox') {
+                        inputCheckBox[i].checked = obj.checked;
+                    }
+                }
+            }
+
+
+        </script>
+
+    </body>
+
+    </html>
+
+
+</apex:page>

@@ -1,0 +1,634 @@
+<apex:page controller="ChartController" action="{!init}" docType="html-5.0">
+    <apex:includeScript value="https://cdn.jsdelivr.net/npm/chart.js"></apex:includeScript>
+    <style>
+      .container{
+        background-color: #3f454f;
+        padding-bottom: 50px;
+        width: 50%;
+        margin: auto;
+      }
+      .containChart{
+        min-width:90%;
+        max-width:90%;
+         min-height:90%;
+         max-height:90%;
+          margin:auto;
+      }
+
+      #myLineChart{
+        background-color:#3f454f;
+         color:aliceblue;
+         width: 100%;
+         height: 100%
+      }
+      .dropdown {
+          position: relative;
+          display: inline-block;
+           width:90%;
+           margin:15px 5% 0 5% ;
+          
+        }
+        #dropdownInput{
+           
+           min-width:100%;
+           max-width:100%;
+           margin: auto;
+            padding: 8px;
+            cursor: pointer;
+            background-color: #3f454f;
+            color: #d9dddc;
+            border: 1px solid #72e1e9e9;
+             border-radius: 7px;
+        }
+      #dropdownInput::placeholder { 
+        color: #d9dddc;
+        opacity: 0.5;
+      }
+  
+ 
+  
+      
+        .dropdown-list {
+          min-width:100%;
+          position: absolute;
+          border: 1px solid #ccc;
+          border-radius: 7px;
+          background-color: #3f454fb5;
+          color: #d9dddc;
+          backdrop-filter: blur(5px);
+          display: none;
+          max-height: 150px;
+          overflow-y: auto;
+        }
+        .custom-dropdown:hover{
+            background-color: #59d1daea;
+            color:#3f454f;
+        }
+
+        .date-time{
+        width: 30%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: auto;
+        
+       }
+       .date-time div{
+      margin-top: 15px;
+        text-align: center;
+       }
+  .date-time div span{
+    color:#d9dddc;
+    font-weight: bolder;
+    margin-bottom: 5px; 
+       }
+       input[type="date"] {
+        
+        color: #d9dddc;
+        background-color:#3f454fb5; 
+        border: 1px solid #72e1e9e9;
+             border-radius: 7px;
+             padding: 8px;
+        }
+
+
+        .custom-dropdown{
+            min-width:95%;
+            display: block;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+
+        
+        .dropdown-list.open {
+          display: block;
+        }
+      
+        .dropdown-list > label {
+          display: block;
+          padding: 5px;
+          cursor: pointer;
+        }
+        
+       
+
+      </style>
+
+   <!-- <apex:form >
+    <apex:selectList id="myDropdown" value="{!selectedOption}" size="1" onchange="gradeChanged()">
+        <apex:selectOptions value="{!options}" />
+    </apex:selectList>
+    <p>Selected Option: {!selectedOption}</p>
+</apex:form> -->
+
+
+ 
+<div class="container">
+
+<div class="dropdown">
+  <input id="dropdownInput"  type="text"  placeholder="Select Grade Options " readonly="true"/>
+  <div class="dropdown-list" id="dropdownList">
+  </div>
+</div>
+<apex:form >  
+<div class="date-time">
+  <div><span>Date From: </span><br/><apex:input type="date"  value="{!selectedStartDateTime}" > 
+    <apex:actionSupport event="onchange" action="{!redirectToTarget}" /> </apex:input> </div>
+  <div><span>Date To: </span><br/><apex:input type="date" value="{!selectedEndDateTime}" >
+    <apex:actionSupport event="onchange" action="{!redirectToTarget}" /> </apex:input></div>
+
+</div>
+</apex:form>
+        <br/><br/><br/>
+        <div class="containChart">
+            <canvas id="myLineChart" ></canvas>
+
+        </div>
+      </div> 
+    <script>
+     
+     function handleStartDateChange(newStartDateValue) {
+            // This function will be called when the date input value changes
+            alert("New date value:"+ newStartDateValue);
+            // You can perform additional actions here
+        }
+
+  function handleEndDateChange(newEndDateValue) {
+            // This function will be called when the date input value changes
+            alert("New date value:"+ newEndDateValue);
+            // You can perform additional actions here
+        }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+var valueGrades = [];
+
+       
+valueGrades = JSON.parse('{!recordRelatedGrades}');
+                        
+for(var x=0; x<valueGrades.length; x++){                       
+  var label = document.createElement('label');
+  label.className = 'custom-dropdown';
+  var checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.value = valueGrades[x];
+  label.appendChild(checkbox);
+  label.appendChild(document.createTextNode("  "+valueGrades[x]));
+  document.getElementById("dropdownList").appendChild(label);
+}
+console.log(valueGrades);
+                      
+            
+const input = document.getElementById('dropdownInput');
+  const dropdownList = document.getElementById('dropdownList');
+
+
+  input.addEventListener('click', function(event) {
+    dropdownList.classList.toggle('open');
+    event.stopPropagation();
+  });
+
+
+const optionLabels = Array.from(document.querySelectorAll('.custom-dropdown'));
+
+  input.addEventListener('input', function() {
+      const inputValue = input.value.toLowerCase();
+    optionLabels.forEach(label => {
+      const labelText = label.textContent.toLowerCase();
+      if (labelText.includes(inputValue)) {
+        label.style.display = 'block';
+      } else {
+        label.style.display = 'none';
+      }
+    });
+    dropdownOptions.classList.add('open');
+    
+   
+  });
+
+
+  dropdownList.addEventListener('click', function(event) {
+    if (event.target.tagName === 'INPUT') {
+      const selectedOption = event.target.value;
+      if (event.target.checked) {
+        input.value += selectedOption + ', ';
+    
+        getAddGrade(selectedOption);
+       } 
+       else {
+        var temp = input.value.replace(selectedOption + ', ', '');
+        if(temp.length > 0) {
+        input.value = input.value.replace(selectedOption + ', ', '');
+        getRemoveGrade(selectedOption);
+        }
+        else{
+          input.value =input.value;
+          event.target.checked=true;
+        }
+        
+      }
+
+    dropdownList.classList.toggle('open');
+    event.stopPropagation(); 
+      
+      
+    }
+  });
+  function getAddGrade(selectedOption)
+{
+
+  for(var i=0; i < newDataset.length; i++) {
+    if(newDataset[i].label == selectedOption)
+    {
+      newDataset[i].hidden=false;
+    }
+
+  }
+  console.log('dataset->'+newDataset);
+  renderChart();
+}
+
+  function getRemoveGrade(selectedOption)
+{
+
+  for(var i=0; i < newDataset.length; i++) {
+    if(newDataset[i].label == selectedOption)
+    {
+      newDataset[i].hidden=true;
+    }
+
+  }
+  console.log('dataset->'+newDataset);
+  renderChart();
+}
+
+  document.addEventListener('onkeydown', function(event) {
+    if (!input.contains(event.target)) {
+      dropdownList.classList.remove('open');
+    }
+  });
+
+var selectedValueGrades;
+var newDataset=[];
+var newDatalabel=new Set();
+
+function getNewDataSet()
+{
+
+selectedValueGrades=JSON.parse('{!recordRelatedGradeBids}');
+// renderChart(selectedValueGrades);
+console.log("result");
+console.log(selectedValueGrades);
+buildNewDataSet();
+              }
+
+
+
+
+
+
+
+
+function buildNewDataSet(){
+
+    console.log("tempArray");
+
+  console.log(selectedValueGrades);
+
+  for (var key in selectedValueGrades) {
+            if (selectedValueGrades.hasOwnProperty(key)) {
+                var value = selectedValueGrades[key];
+                var colorX=randomColor();
+                console.log('Key: ' + key + ', Value: ' + value);
+                newDataset.push(
+  {
+                        label: key,
+                        data: value.map(function(getData) {
+                            return {x:dateformat(getData.Default_Date__c), y:getData.Price__c};
+                        }),
+                        borderColor: colorX,
+                        backgroundColor: colorX,
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 4,
+                        pointStyle: 'rectRot',
+                        hidden: true,
+                        pointHoverBackgroundColor: "rgba(0, 0, 0, 0.2)",
+                        pointHoverBorderColor: colorX,
+                      }
+);
+console.log('dataset->'+newDataset);
+value.map(function(getData) {
+                         newDatalabel.add(dateformat(getData.Default_Date__c));  
+                        });
+            }
+        }
+
+
+
+
+
+renderChart();
+}
+
+
+
+
+     var getDatas = [];
+
+        function fetchData() {
+            // Call the Apex method using actionFunction
+         
+                  
+              getDatas = JSON.parse('{!recordBids}');
+              console.log(getDatas);
+                      var colorX=randomColor();  
+              newDataset.push(
+              {
+                        label: getDatas[0].Grade__c,
+                        data: getDatas.map(function(getData) {
+                          //{x: 10, y: 20}
+                          // console.log('getData.Default_Date__c->>'+getData.Default_Date__c);
+                          // console.log('dateformat(getData.Default_Date__c)->>'+dateformat(getData.Default_Date__c));
+                          return {x:dateformat(getData.Default_Date__c), y:getData.Price__c};
+                        }),
+                        borderColor: colorX,
+                        backgroundColor: colorX,
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 4,
+                        pointStyle: 'rectRot',
+                        hidden: false,
+                        pointHoverBackgroundColor: "rgba(0, 0, 0, 0.2)",
+                        pointHoverBorderColor: colorX,
+                      }
+);
+getDatas.map(function(getData) {
+                         newDatalabel.add(dateformat(getData.Default_Date__c)); 
+
+                        });
+
+
+      const inputs=document.getElementsByTagName('input');
+        for(var i=0; i<inputs.length; i++)
+        {
+          if(inputs[i].value==getDatas[0].Grade__c)
+          {
+            inputs[i].checked=true;
+            input.value += getDatas[0].Grade__c + ', ';
+          }
+        }
+        getNewDataSet();
+                        renderChart();
+  
+            
+        }
+
+
+        
+        var lineChart;
+        function renderChart() {
+
+          const getOrCreateTooltip = (chart) => {
+  let tooltipEl = chart.canvas.parentNode.querySelector('div');
+
+  if (!tooltipEl) {
+    tooltipEl = document.createElement('div');
+    tooltipEl.style.background = 'rgba(0, 0, 0, 0.7)';
+    tooltipEl.style.borderRadius = '3px';
+    tooltipEl.style.color = '#d9dddc';
+    tooltipEl.style.opacity = 1;
+    tooltipEl.style.pointerEvents = 'none';
+    tooltipEl.style.position = 'absolute';
+    tooltipEl.style.transform = 'translate(-50%, 0)';
+    tooltipEl.style.transition = 'all .1s ease';
+
+    const table = document.createElement('table');
+    table.style.margin = '0px';
+
+    tooltipEl.appendChild(table);
+    chart.canvas.parentNode.appendChild(tooltipEl);
+  }
+
+  return tooltipEl;
+};
+
+          const externalTooltipHandler = (context) => {
+  // Tooltip Element
+  const {chart, tooltip} = context;
+  const tooltipEl = getOrCreateTooltip(chart);
+
+  // Hide if no tooltip
+  if (tooltip.opacity === 0) {
+    tooltipEl.style.opacity = 0;
+    return;
+  }
+
+  // Set Text
+  if (tooltip.body) {
+    const titleLines = tooltip.title || [];
+    const bodyLines = tooltip.body.map(b => b.lines);
+
+    const tableHead = document.createElement('thead');
+
+    titleLines.forEach(title => {
+      const tr = document.createElement('tr');
+      tr.style.borderWidth = 0;
+
+      const th = document.createElement('th');
+      th.style.borderWidth = 0;
+      const text = document.createTextNode(title);
+
+      th.appendChild(text);
+      tr.appendChild(th);
+      tableHead.appendChild(tr);
+    });
+
+    const tableBody = document.createElement('tbody');
+    bodyLines.forEach((body, i) => {
+      const colors = tooltip.labelColors[i];
+
+      const span = document.createElement('span');
+      span.style.background = colors.backgroundColor;
+      span.style.borderColor = colors.borderColor;
+      span.style.opacity = "0.85";
+      span.style.borderWidth = '2px';
+      span.style.marginRight = '10px';
+      span.style.height = '10px';
+      span.style.width = '10px';
+      span.style.display = 'inline-block';
+
+      const tr = document.createElement('tr');
+      tr.style.backgroundColor = 'inherit';
+      tr.style.borderWidth = 0;
+
+      const td = document.createElement('td');
+      td.style.borderWidth = 0;
+      td.style.color = colors.backgroundColor;
+      td.style.opacity = "0.85";
+var varBody=String(body);
+varBody=varBody.replace(": ", ": $");
+      const text = document.createTextNode(varBody);
+      
+
+      td.appendChild(span);
+      td.appendChild(text);
+      tr.appendChild(td);
+      tableBody.appendChild(tr);
+    });
+
+    const tableRoot = tooltipEl.querySelector('table');
+
+    // Remove old children
+    while (tableRoot.firstChild) {
+      tableRoot.firstChild.remove();
+    }
+
+    // Add new children
+    tableRoot.appendChild(tableHead);
+    tableRoot.appendChild(tableBody);
+  }
+
+  const {offsetLeft: positionX, offsetTop: positionY} = chart.canvas;
+
+  // Display, position, and set styles for font
+  tooltipEl.style.opacity = 1;
+  tooltipEl.style.left = positionX + tooltip.caretX + 'px';
+  tooltipEl.style.top = positionY + tooltip.caretY + 'px';
+  tooltipEl.style.font = tooltip.options.bodyFont.string;
+  tooltipEl.style.padding = tooltip.options.padding + 'px ' + tooltip.options.padding + 'px';
+};
+
+
+
+
+            var ctx = document.getElementById("myLineChart").getContext("2d");
+            var dates = [];
+            tempdates=Array.from(newDatalabel);
+
+            for(var i = 0; i < tempdates.length; i++) {
+            var tempArr= String(tempdates[i]).split('/');
+            var newDate=tempArr[1]+'/'+tempArr[0]+'/'+tempArr[2];
+ //console.log('tempdates[i]->>'+newDate)
+            dates.push(new Date(newDate));
+            }
+            console.log("dates");
+            console.log(dates);
+          dates.sort((date1, date2) => date1 - date2);
+      
+          for(var i = 0; i < dates.length; i++) {
+            console.log('pick dates->>'+dates[i])
+            dates[i]=dateformat(dates[i]);
+            }
+
+            var data = {
+                labels: dates,
+                datasets: newDataset
+                
+            };
+
+            
+            var options = {
+                
+    interaction: {
+      intersect: false,
+      axis:'x',
+      mode: 'nearest',
+    },
+    scales: {
+      x: {
+        ticks: {
+          color:"#d9dddc"
+        },
+       
+        grid: {
+          color: "#60656d"
+        }
+      },
+      y: {
+        ticks: {
+          color:"#d9dddc"
+        },
+        
+        grid: {
+          color: "#60656d"
+        },
+      }
+    },
+    plugins: {
+      legend: {
+        labels: {
+          usePointStyle: true,
+          color:"#d9dddc"
+        },
+        onClick: null
+      },
+      tooltip: {
+        enabled: false,
+        position: 'nearest',
+        external: externalTooltipHandler
+      }
+
+    }
+
+            };
+           
+            if(lineChart)
+            {
+              lineChart.destroy();
+            }
+             lineChart = new Chart(ctx, {
+                type: "line",
+                data: data,
+                options: options
+            });
+
+        }
+
+        function dateformat(getdate)
+        {  
+        
+            var date = new Date(getdate);
+            var jsDate = date; // Create a JavaScript date object
+        
+        // Define options for date formatting
+        var options = {
+          
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric'
+           
+        };
+        
+        // Create a formatter using Intl.DateTimeFormat
+        var dateFormatter = new Intl.DateTimeFormat('en-GB', options);
+        console.log(jsDate);
+        var formattedDate = dateFormatter.format(jsDate);
+    
+  
+        // Format the date using the formatter
+        
+       //alert(formattedDate);
+        return formattedDate;
+        }
+        var colorCounter=0;
+        function randomColor()
+        {
+          colors=["#A1EAFB","#C2FAF1","#00E0FF","#3FC5F0","#78C1F3","#00FFF0","#79E0EE","#C3F8FF","#ACBCFF", "#D2DAFF","#ECF2FF", "#769FCD", "#DFEFF0","#8BFFFF","#A7C5EB", "#75C2F6", "#6886C5", "#7098DA", "#A6FFF2","#EBFFFA"];
+          var outputColor=colors[colorCounter];
+          colorCounter+=1;
+          if(colorCounter==19)
+          {
+            colorCounter=0;
+          }
+          return outputColor;
+
+        }
+
+        // Fetch data when the page loads
+        fetchData();
+    </script>
+    
+</apex:page>

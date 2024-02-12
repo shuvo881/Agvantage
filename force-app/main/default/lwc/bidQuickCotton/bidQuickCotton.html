@@ -1,0 +1,91 @@
+<template>
+    <article class="slds-card" style="width:1800px; margin:30px auto; padding-bottom: 55px; padding-right:340px">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-account" title="account">
+                    <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Cotton Bid</span>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h3 class="slds-card__header-title">
+                    <a class="slds-card__header-link slds-truncate" title="Accounts">
+                        <span>Cotton Bid Creator</span>
+                    </a>
+                    </h3>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-4">
+                    <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                                               <c-quick-Cotton-object-lookup label="Buyer Name" error-details={fakeErrorDetails}  is-required="false" object-name="Account" required="false" index="888888888" placeholder="Buyer Name" searchfield="Name" default-item={searchDefaultItem} onselectedrec={handleBuyerNameChangeForSearch}></c-quick-Cotton-object-lookup>
+
+                    </div>
+                </div>
+                
+            </div>
+             <div class="slds-col slds-size_1-of-5">
+                    <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning-input class="date_input" variant="label-hidden" type="datetime-local" 
+                        searchfield="Save Date" placeholder="Save Date" 
+                        value={todayDate} onchange={handleChangeSaveDateTime}></lightning-input>
+
+                    <!-- <template if:true={fullRecord.endDateErrorDetails.isError}>
+                        <div class="slds-form-element__help">{fullRecord.endDateErrorDetails.errorMessage}</div>
+                    </template> -->
+                    </div>
+                </div>
+              
+            </div>
+            </div>
+           
+            
+            <div class="slds-size_1-of-3">
+                <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <lightning-input class="include_bid" label="Include Today's Bid" type="checkbox" onchange={handleCheckboxChange}></lightning-input>
+                </div>
+                    </div>
+                </div>
+            <hr style="margin-right:-190px" >
+
+
+            <template if:true={isLoading}>
+                <div class="slds-align_absolute-center" style="margin-top: 2rem;">
+                  <lightning-spinner variant="brand" size="medium"></lightning-spinner>
+                </div>
+              </template>
+
+
+            <template if:false={isLoading}>
+            <template for:each={lineItems} for:item='item'>
+                <c-quick-Cotton-object-dynamic-row buyer-id={thisBuyerId} full-record={item} onitemselected={handleRowSelection} onaddrow={handleAdd} onaddrowsite={handleSiteAdd} 
+                ondeleterow={handleRowDeletion} onexcludedsite={handleExcludedSite} key={item.index} onupdatethisrow={handleValueChanges}></c-quick-Cotton-object-dynamic-row>
+            </template>
+            
+            
+            
+            <div class="slds-size_3-of-14">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning-button class="create_bids_button" label="Create Cotton Bids" onclick={handleSaveClick}></lightning-button>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="slds-col slds-size_1-of-12">
+                <div>
+                    <lightning-button-icon class="add_button" onclick={handleAdd} icon-name="utility:add" alternative-text="Add"></lightning-button-icon>
+                    <lightning-button variant="brand-outline" onclick={handleSiteAdd} label="Add Site" alternative-text="Add Site"></lightning-button>
+                </div>
+            </div> -->
+            </template>
+        </div>
+    </article>
+</template>

@@ -1,0 +1,140 @@
+<template>
+
+    <div class="slds-grid slds-gutters">
+
+        <div class="slds-col action_margin">
+            <lightning-button-icon data-id={fullRecord.index} index={fullRecord.index} onclick={handleDelete} icon-name="utility:close" alternative-text="Remove Row"></lightning-button-icon>
+        </div>
+        <!-- <div class="slds-col slds-size_1-of-12">
+        <lightning-formatted-text value={fullRecord.createdDateDefaultValue}></lightning-formatted-text>
+    </div> -->
+
+        <div class={siteClass} style="margin-left: -15px;"> 
+            <c-tflwc-object-lookup iconname="standard-account" class="row1" label="" error-details={fullRecord.siteErrorDetails} is-required="true"
+                index={index} object-name="Site__c" placeholder="Site" searchfield="Name"
+                default-item={fullRecord.siteDefaultItem}
+                onselectedrec={handleSiteLookupChange}></c-tflwc-object-lookup>
+            <lightning-formatted-date-time value={fullRecord.createdDateDefaultValue}></lightning-formatted-date-time>
+        </div>
+
+        <div class={bidderContactClass}>
+            <c-tflwc-object-bidder-contact-lookup buyer-id={buyerId} iconname="standard-account" class="row" label="" error-details={fullRecord.bidderContactErrorDetails}
+                is-required="true" object-name="Contact" index={index} options={fullRecord.biddercontactOptions}
+                placeholder="Bidders Contact" searchfield="Name" default-item={fullRecord.bidderContactDefaultValue}
+                onselectedrec={handleBidderContactChange}></c-tflwc-object-bidder-contact-lookup>
+        </div>
+
+        <!-- <div class="slds-col slds-size_1-of-12">
+        <c-tflwc-object-lookup iconname="standard-account" label="Buyer Name" error-details={fullRecord.buyerNameErrorDetails}  is-required="true" object-name="Account" index={index} options={fullRecord.buyernameOptions} placeholder="Buyer Name" searchfield="Name" default-item={fullRecord.buyerNameDefault} onselectedrec={handleBuyerNameChange}></c-tflwc-object-lookup>
+    </div> -->
+
+        <div class={commodityClass}>
+            <div class={fullRecord.commodityErrorDetails.errorClass}>
+                <lightning-combobox class="row" options={fullRecord.commodityOptions} placeholder="Commodity"
+                    searchfield="Name" value={fullRecord.commodityDefaultValue}
+                    onchange={handleCommodityChange}></lightning-combobox>
+                <template if:true={fullRecord.gradeErrorDetails.isError}>
+                    <div class="slds-form-element__help">{fullRecord.commodityErrorDetails.errorMessage}</div>
+                </template>
+            </div>
+        </div>
+
+        <div class={gradeClass}>
+            <div class={fullRecord.gradeErrorDetails.errorClass}>
+
+                <lightning-combobox class="row" options={gradeOptions} placeholder="Grade" searchfield="Name"
+                    value={fullRecord.gradeDefaultValue} onchange={handleGradeChange}></lightning-combobox>
+
+                <template if:true={fullRecord.gradeErrorDetails.isError}>
+                    <div class="slds-form-element__help">{fullRecord.gradeErrorDetails.errorMessage}</div>
+                </template>
+            </div>
+        </div>
+
+        <div class={cropYearClass}>
+            <div class={fullRecord.cropYearErrorDetails.errorClass}>
+
+                <lightning-combobox class="row" options={fullRecord.cropYearOptions}
+                    value={fullRecord.cropYearDefaultValue} searchfield="Crop Year" placeholder="Crop Year"
+                    onchange={handleCropYearChange}></lightning-combobox>
+
+                <template if:true={fullRecord.cropYearErrorDetails.isError}>
+                    <div class="slds-form-element__help">{fullRecord.cropYearErrorDetails.errorMessage}</div>
+                </template>
+            </div>
+        </div>
+
+        <div class={saleOriginDestinationClass}>
+            <div class={fullRecord.priceTypeErrorDetails.errorClass}>
+
+                <lightning-combobox class="row" options={fullRecord.priceTypeOptions}
+                    value={fullRecord.priceTypeDefaultValue} searchfield="Sale Origin/Destination"
+                    placeholder="Sale Origin/Destination" onchange={handlePriceTypeChange}></lightning-combobox>
+
+                <template if:true={fullRecord.priceTypeErrorDetails.isError}>
+                    <div class="slds-form-element__help">{fullRecord.priceTypeErrorDetails.errorMessage}</div>
+                </template>
+            </div>
+        </div>
+
+
+
+        <div class="slds-col slds-size_4-of-12 action_margin1">
+            <div class="slds-grid slds-gutters">
+                <div class={priceClass}>
+                    <div class={fullRecord.priceErrorDetails.errorClass}>
+
+                        <lightning-input type="number" searchfield="Price" placeholder="Price"
+                        formatter="currency" step="0.01" default-item={priceDefaultItem} value={fullRecord.priceDefaultValue}
+                            onchange={handlePriceChange}></lightning-input>
+
+                        <template if:true={fullRecord.priceErrorDetails.isError}>
+                            <div class="slds-form-element__help">{fullRecord.priceErrorDetails.errorMessage}</div>
+                        </template>
+                    </div>
+                </div>
+
+
+                <div class={startDateClass}>
+                    <div class={fullRecord.startDateErrorDetails.errorClass}>
+
+                        <lightning-input class="date_input" variant="label-hidden" type="datetime-local"
+                            searchfield="Start Date" placeholder="Start Date" default-item={startdateDefaultItem}
+                            value={fullRecord.startDateDefaultValue} onchange={handleStartDateChange}></lightning-input>
+                        <!-- <div>{fullRecord.startDateDefaultValue}</div> -->
+                        <template if:true={fullRecord.startDateErrorDetails.isError}>
+                            <div class="slds-form-element__help">{fullRecord.startDateErrorDetails.errorMessage}</div>
+                        </template>
+                    </div>
+                </div>
+
+                <div class={endDateClass}>
+                    <div class={fullRecord.endDateErrorDetails.errorClass}>
+
+                        <lightning-input class="date_input" variant="label-hidden" type="datetime-local" 
+                            searchfield="End Date" placeholder="End Date" default-item={enddateDefaultItem}
+                            value={fullRecord.endDateDefaultValue} onchange={handleEndDateChange}></lightning-input>
+
+                        <template if:true={fullRecord.endDateErrorDetails.isError}>
+                            <div class="slds-form-element__help">{fullRecord.endDateErrorDetails.errorMessage}</div>
+                        </template>
+                    </div>
+
+                </div>
+
+                <div class="slds-col slds-size_6-of-12 action_margin">
+                <lightning-button-icon data-id={fullRecord.index} index={fullRecord.index} onclick={handleAdd} icon-name="utility:add" alternative-text="Add Blank Row"></lightning-button-icon> &nbsp;
+                <lightning-button-icon data-id={fullRecord.index} index={fullRecord.index} onclick={handleSiteAdd} icon-name="utility:copy" alternative-text="Copy Base Site Row"></lightning-button-icon> &nbsp;
+                <lightning-button-icon data-id={fullRecord.index} index={fullRecord.index} onclick={handleDelete} icon-name="utility:close" alternative-text="Remove Row"></lightning-button-icon> &nbsp;
+                <lightning-button-icon data-id={fullRecord.index} index={fullRecord.index} onclick={handleExcluded} icon-name="utility:ban" alternative-text="Exclude Row"></lightning-button-icon> &nbsp;
+            </div>
+            </div>
+        </div>
+
+   
+
+
+    </div>
+
+
+</template>

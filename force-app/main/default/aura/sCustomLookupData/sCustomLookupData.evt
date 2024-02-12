@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="siteInfo" type="Object"/>
+    <aura:attribute name="ntptype" type="String"/>
+</aura:event>

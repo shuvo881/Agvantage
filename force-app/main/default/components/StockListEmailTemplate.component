@@ -1,0 +1,154 @@
+<apex:component controller="StockListEmailTemplateCtrl" access="global" allowDML="true">
+
+    <a target="_blank" href="{!publicPageUrl}" style="border: 1px solid #ccc; background: rgb(230, 230, 230); color: #000; text-decoration: none; padding: 7px; margin: 10px;">Open in a Window</a>
+    <br/>
+    <br/>
+
+    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;border: 1px solid #ccc;">
+
+
+    <apex:repeat value="{!StockList}" var="key">       
+        <apex:variable var="color" value="#f7f7f7b3"/>
+
+
+                <tr>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        ID No.
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Date
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Status
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Sale Origin/Dest’n.
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Commodity
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Crop Yr.
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Grade
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Contract Type
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Qty
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Del. Terms
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Tolerance
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Location
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        GPS
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Price Type
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Price
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Spreads
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Payment Terms
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Del Period Start
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap;">
+                        Del Period End
+                    </th>
+                    <th scope="col" colspan="1" style="text-align: left; background: #e0e0e0b3; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: wrap; width: 100px !important;">
+                        Conditions/Notes
+                    </th>
+                </tr>
+
+
+        <apex:repeat value="{!StockList[key]}" var="s">
+
+        
+            <apex:variable var="color" value="{!IF(color == '#f7f7f7b3', '#ffffff', '#f7f7f7b3')}"/>
+
+            <tr style="background: {!color}; color: {!s.Other_Contaminants__c}">
+
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; white-space: nowrap; vertical-align: top;">{!s.Name}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">
+                    
+                    <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                        <apex:param value="{!s.Last_Bid_Date__c}" /> 
+                    </apex:outputText>
+                    
+                </td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Status__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Sale_Origin_Destination__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Commodity__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Crop_Year__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Grade2__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Contract_Type__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Quantity__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Delivery_Terms__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Condition__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Farm_Location_State__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Variety__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Size__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Price_Target__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Grade_Spreads__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">{!s.Payment_Terms__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">
+                    <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                        <apex:param value="{!s.Delivery_Period_Start__c}" /> 
+                    </apex:outputText>
+                </td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; white-space: nowrap;">
+                    <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                        <apex:param value="{!s.Delivery_Period_End__c}" /> 
+                    </apex:outputText>
+                </td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; width: 100px !important;">{!s.Conditions__c}</td>
+                <!-- <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top; ">{!s.Comments__c}</td> -->
+
+                <!-- <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top;">{!s.Farm_Distance_km__c}, {!s.Farm_Direction__c} of {!s.Farm_Nearest_Town__c}, {!s.Farm_Location_State__c}, {!s.Farm_Road_Name__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top;">{!s.Comments__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top;">{!s.Delivery_Terms__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top;">{!s.Price_Offered__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top;">{!s.Price_Target__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top;">{!s.Grade_Spreads__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top;">{!s.Payment_Terms__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top;">{!s.Delivery_Period_Start__c}</td>
+                <td style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 7px; vertical-align: top;">{!s.Delivery_Period_End__c}</td>
+         -->
+
+            </tr>
+
+        
+
+        </apex:repeat>
+
+
+
+    </apex:repeat>
+
+</table>
+
+    
+            
+    
+            <!-- <apex:repeat value="{!StockList}" var="s" >
+                
+    
+            </apex:repeat> -->
+    
+
+
+</apex:component>

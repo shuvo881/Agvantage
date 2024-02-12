@@ -1,0 +1,135 @@
+:host{
+    --company_color: #004878;
+    --hover_color: #002f4e;
+}
+
+
+
+.nav1{
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    list-style-type: none;
+    
+}
+
+.nav1 img{
+    height: 4rem;
+    width: 10rem;
+}
+.nav1 ul{
+    font-size: 1.2rem;
+}
+
+
+
+
+.navbar {
+    background-color: var(--company_color); /* Blue color */
+    overflow: hidden;
+    text-align: center;
+    align-items: center;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #fff;
+    text-align: center;
+    padding: 15px 15px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navbar a:hover, .submenu:hover .dropbtn {
+    background-color: var(--hover_color); /* Darker blue color on hover */
+    border-top: 3px solid green;
+    padding-right: 5rem;
+}
+
+.submenu {
+    float: left;
+    overflow: hidden;
+}
+
+.submenu .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: #fff;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.submenu-content {
+    display: none;
+    position: absolute;
+    background-color: #eeeeee; /* Background color for submenu */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: 2px solid;
+}
+
+.submenu-content a {
+    float: none;
+    color: #080a0c;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.submenu-content a:hover {
+    background-color: #ddd; /* Light gray color on submenu item hover */
+}
+
+.submenu:hover .submenu-content {
+    display: block;
+}
+
+
+
+
+
+ /* Style for the search input */
+ .search-container {
+    margin-top: 0.5rem;
+}
+
+.search-input {
+    padding: 8px 30px 8px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 200px;
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 768px){
+    .nav1 img{
+        height: 2rem;
+        width: 5rem;
+    }
+    .nav1 ul{
+        font-size: 0.8rem;
+    }
+}

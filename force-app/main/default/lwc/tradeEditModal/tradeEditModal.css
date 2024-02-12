@@ -1,0 +1,12 @@
+.card{
+    width:100%; 
+    background-color:rgba(230, 230, 230, 0.932); 
+    font-size:18px;
+    padding:10px;
+    margin-bottom:10px;
+    border-radius:5px;
+}
+.card-title{
+    font-size:20px;
+    padding-top:15px;
+}

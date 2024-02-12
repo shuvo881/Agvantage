@@ -1,0 +1,257 @@
+<template>
+    <lightning-card title="Bid Dashboard" icon-name="standard:account">
+                    <div class="slds-grid slds-gutters filterDropDownContainer">
+
+                                    <lightning-layout-item size="2" class="slds-p-around_small">
+                                <template if:true={showCommodityOptions}>
+                                    <c-multi-select-pick-list label="Commodity" options={commodityOptions} multi-select="true" onselectoption={handleCommodityFilter} ></c-multi-select-pick-list>
+                                </template>
+                            </lightning-layout-item>
+
+                                <template if:true={showGradeOptions}>
+                                    <template for:each={yourList} for:item="listVariable">
+                                        <lightning-layout-item size="2" class="slds-p-around_small" key={listVariable}>
+                                            <c-multi-select-pick-list label="Grade" options={gradeOptions}  multi-select="true" onselectoption={handleGradeFilter} disabled={isGradeDisabled} ></c-multi-select-pick-list>
+                                        </lightning-layout-item>
+                                    </template>
+                                </template>
+
+                                <template if:true={showCropYearOptions}>
+                                    <lightning-layout-item size="2" class="slds-p-around_small">
+                                    <c-multi-select-pick-list label="Crop Year" options={cropYearOptions} multi-select="true" onselectoption={handleCropYearFilter} ></c-multi-select-pick-list>
+                                </lightning-layout-item>
+                                </template>
+
+                                <template if:true={showBidDateOptions}>
+
+                                        <lightning-input class="slds-p-around_small date_input" type="date" label="Bid Date"
+                                        value={todayDate} onchange={handleBidDateFilter}></lightning-input>            
+                                </template>
+
+                                <template if:true={showSearchBid}>
+                                    <button class="slds-button slds-button_neutral search-bid-button" onclick={handleSearchBidFilter} title="Search Bids">Search Bids</button>
+
+                                   
+                                </template>
+                        </div>
+         <div>
+            <template if:true={data}>
+                <template for:each={data} for:item="con">
+                    <p style="font-size:20px; padding:15px; font-weight:20px;"  key={con.key}>{con.key}</p>
+                    <lightning-datatable
+                    key-field="Id"
+                    key={con.key}
+                    data={con.data}
+                    onrowselection={handleRowSelection}
+                    onrowaction={handleRowAction}
+                    data-id="accountSyncGrid"
+                    columns={columns}></lightning-datatable> 
+                </template>
+            </template>
+        </div>
+            <template if:true={error}>
+                {error}>
+            </template>
+
+          
+    </lightning-card>
+    <lightning-card>
+        <lightning-button label="Next" onclick={handleClick}></lightning-button>             
+    </lightning-card>
+    
+
+    <!--Use template if:true to display/hide popup based on isModalOpen value--> 
+    <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Related Bids</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+ 
+               
+
+          
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                    <template if:true={isSelectedBidVisible}>
+
+                     
+
+                        <lightning-datatable
+                            key-field="Id"
+                            data={selectedBids}
+                            columns={selectedBidColumn}
+                            data-id="accountSyncGrid"
+                            hide-checkbox-column="true"
+                            >
+                        </lightning-datatable>
+                    </template>
+
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+<!--Historical graph-->
+<!--Use template if:true to display/hide popup based on isModalOpen value--> 
+
+<template if:true={isGraphOpen}>
+   
+    <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+           
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                    <lightning-icon icon-name="utility:close"
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Historical Bids</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+
+                <iframe src={ifrmaeSRC} 
+                frameborder="0" style="width:100%; height:600px; display:flex; margin:auto;"></iframe> 
+
+            </div> 
+           
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+
+
+ <!--Use template if:true to display/hide popup based on isSearchBidOpen value--> 
+ <template if:true={isSearchBidOpen}>
+    <!-- Modal/Popup Box LWC starts here -->
+    <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open ">
+        <div class="bidModal slds-modal__container">
+            <!-- Modal/Popup Box LWC header here -->
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                    <lightning-icon icon-name="utility:close"
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Search Bids</h2>
+            </header>
+            <!-- Modal/Popup Box LWC body starts here -->
+
+
+
+
+                <div class="slds-grid slds-gutters filterBidSearchContainer">
+
+                    <lightning-layout-item size="2" class="slds-p-around_small" >
+                        <template if:true={searchSiteOptions}>
+                            <!-- <c-multi-select-pick-list label="Site" options={SearchBidsiteOptions} multi-select="true" onselectoption={handleSearchSiteFilter} >
+        
+                            </c-multi-select-pick-list> -->
+
+                            <c-quick-bid-object-lookup  class="row1" label="" error-details={siteErrorDetailsDefault} is-required="true"
+                             object-name="Site__c" placeholder="Site" searchfield="Name"
+                             onselectedrec={handleSearchSiteFilter}
+                            ></c-quick-bid-object-lookup>
+
+                        </template>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="2" class="slds-p-around_small">
+                <template if:true={searchCommodityOptions}>
+                    <lightning-combobox label="Commodity" placeholder="Commodity" options={commodityBidOptions} multi-select="true" onchange={handleSearchCommodityFilter} >
+
+                    </lightning-combobox>
+                </template>
+            </lightning-layout-item>
+
+                    <template for:each={yourComList} for:item="listVariable">
+                        <lightning-layout-item size="2" class="slds-p-around_small" key={listVariable}>
+                            <lightning-combobox label="Grade" placeholder="Grade"  options={gradeBidOptions}  onchange={handleSearchGradeFilter} ></lightning-combobox>
+                        </lightning-layout-item>
+                    </template>
+               
+                    <lightning-layout-item size="2" class="slds-p-around_small" >
+
+                        <lightning-combobox label="Crop Year" placeholder="Crop Year" options={cropYearBidOptions} multi-select="true" onchange={handleSearchCropYearFilter} ></lightning-combobox>
+                    </lightning-layout-item>
+                   
+               
+                    <lightning-layout-item size="2" class="slds-p-around_small" >
+                        <lightning-combobox label="Sale Origin/Destination" placeholder="Sale Origin/Destination" options={saleBidOptions} multi-select="true" onchange={handleSearchSaleOriginFilter} ></lightning-combobox>
+
+                    </lightning-layout-item>
+                   
+        
+               
+        
+                    <lightning-layout-item size="1" class="slds-p-around_small" >
+                        <button class="slds-button slds-button_neutral search-button" onclick={handleSearchBid} title="Search">Search </button>
+
+                    </lightning-layout-item>
+                    <lightning-layout-item size="1" class="slds-p-around_small" >
+                        <button class="slds-button slds-button_neutral clear-button" onclick={handleRemove} title="Clear">Clear </button>
+
+                    </lightning-layout-item>
+                  
+                  
+        
+            </div>
+            <template if:true={isHideDiv}>
+                <div tabindex="-1" class="hide-div">
+
+                </div>
+            </template>
+
+           
+            <div class="search-bid-content">
+                <template if:true={Biddata}>
+                    <template for:each={Biddata} for:item="con1">
+                          
+                        <lightning-datatable
+                        key-field="Id"
+                        key={con1.key}
+                        data={con1.data}
+                        onrowselection={handleRowSelection}
+                        onrowaction={handleRowAction}
+                        data-id="accountSyncGrid"
+                        columns={columns}></lightning-datatable> 
+                    </template>
+                </template>
+            </div>
+                <template if:true={error}>
+                    {error}>
+                </template>
+      
+            
+            <!-- Modal/Popup Box LWC footer starts here -->
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
+
+</template>

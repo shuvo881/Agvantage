@@ -1,0 +1,86 @@
+.combo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: absolute center;
+    align-content: center;
+    justify-content: space-between;
+    width: 120%;
+    position: relative;
+    margin-bottom: 50px;
+    float: left;
+    margin: 20px 20px 20px 20px;
+    padding: 20px 20px 20px 20px;
+}
+
+.slds-modal__container{
+    width: 90%;
+    max-width: 100%;
+    height: 95%;
+    max-height: 100%;
+    overflow: hidden;
+    position: relative;
+  
+}
+
+.filterBidSearchContainer{
+    
+    background-color: white;
+    padding-left: 20px;
+    max-height: 18vh;
+    min-height: 18vh;
+    overflow-y: auto !important;
+}
+.filterDropDownContainer {
+   
+    padding-left: 20px;
+
+}
+.bidModal{
+    position:fixed !important;
+    top:100px;
+    left: 100px;
+    
+
+
+}
+
+.date_input{
+    margin-bottom: 5px;
+}
+.content{
+    background-color: white;
+}
+.drop-button{
+    margin:0px 10px 0px 10px;
+}
+.search-bid-button{
+    margin-top:32px;
+    background-color: green;
+    height: 35px;
+    color: white;
+}
+.search-button{
+    margin-top:20px;
+    margin-left: 10px;
+    background-color: green;
+    height: 35px;
+    color: white;
+}
+.clear-button{
+    margin-top:20px;
+    background-color: rgb(109, 117, 235);
+    height: 35px;
+    color: white;
+}
+.search-bid-content{
+    background-color: white;
+    overflow-y: auto !important;
+    padding-bottom: 10px !important;
+}
+.slds-input__icon_right{
+    margin-top: 3px !important;
+}
+.hide-div{
+    height: 10vh;
+    background-color: white !important;
+}

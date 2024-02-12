@@ -1,0 +1,312 @@
+<template>
+    
+        <div class="card-title" align="center"><p><b>Clone Trade Record</b></p></div>     
+
+<div style="padding: 25px;"> 
+
+        <lightning-record-edit-form object-api-name="Opportunity"
+                                    onsubmit={handleSubmit}
+                                    
+                                    onload={handleLoad}
+                                    columns="2"
+                                    mode="edit"
+                                    
+        >  
+
+                <div class="card"><p><b>Counterparties Details</b></p></div>     
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                <lightning-input-field field-name="Name" value={tradeName} label="Trade Name" required></lightning-input-field>
+                <lightning-input-field field-name="AccountId" value={sellerAccName} label="Seller's Account Name" required></lightning-input-field>
+                <lightning-input-field field-name="Seller_Representative__c" value={sellerRep} label="Seller Representative" required></lightning-input-field>
+
+                <lightning-input-field field-name="StageName" value={stage} label="Stage" required></lightning-input-field>
+                <lightning-input-field field-name="Spreads__c" value={spreads} label="Spreads"></lightning-input-field>
+
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                <lightning-input-field field-name="RecordTypeId" value={tradeRecType} label="Trade Record Type"></lightning-input-field>
+                <lightning-input-field field-name="Buyer_s_Contact__c" value={buyerCont} label="Buyer's Contact" required></lightning-input-field>
+                <lightning-input-field field-name="CloseDate" value={closeDate} label="Close Date" required></lightning-input-field>
+
+                </div>
+        </div>
+      
+
+                <div class="card"><p><b>Broker / Consultant Details</b></p></div>     
+
+                <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="Broker_Consultant_Rep__c" value={brokerRep} label="Broker/Consultant Rep" onchange={handleChangebrokerRep} required></lightning-input-field>
+                                <lightning-input-field field-name="AgVantage_Acting_as__c" value={actAs} label="AgVantage Acting as" required></lightning-input-field>
+                                <lightning-input-field field-name="Commission_Rate_Unit__c" value={comRateSeller} label="Commission Rate/Unit Seller"></lightning-input-field>
+                                <lightning-input-field field-name="Commission_Rate_Unit_Buyer__c" value={comRateBuyer} label="Commission Rate/Unit Buyer"></lightning-input-field>
+
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="Business_Credited_to__c" value={busCredit} label="Business Credited to"  onchange={handleChangebusCredit} required></lightning-input-field>
+                                <lightning-input-field field-name="Commission_invoiced_to__c" value={comInvSeller} label="Commission invoiced to Seller"></lightning-input-field>
+                                <lightning-input-field field-name="Commission_invoiced_to_Buyer__c" value={comInvBuyer} label="Commission invoiced to Buyer"></lightning-input-field>
+
+                        </div>
+                </div>
+               
+
+        <div class="card"><p><b>Sale Type & Contract Details</b></p></div>     
+
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Sale_Origin_Destination__c" value={saleOrigin} label="Sale Origin/Destination" required></lightning-input-field>
+                        <lightning-input-field field-name="Grade__c" value={grade} label="Grade"><br></lightning-input-field>
+                        <lightning-input-field field-name="Grade_Spreads__c" value={gradeSpread} label="Grade Spreads"></lightning-input-field>
+                        <lightning-input-field field-name="Contract_Quantity__c" value={conQuantity} label="Contract Quantity"></lightning-input-field>
+                        <lightning-input-field field-name="Price__c" value={conPrice} label="Contract Price per Unit"></lightning-input-field>
+
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Type" value={saleType} label="Sales Type"></lightning-input-field>
+
+                </div>
+        </div>
+        
+        <div class="card"><p><b>Contract Details</b></p></div>     
+
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Contract_Number__c" value={conNum} label="Contract Number" required></lightning-input-field>
+                        <lightning-input-field field-name="Commodity__c" value={commodity} label="Commodity" required></lightning-input-field>
+                        <lightning-input-field field-name="Contract_Type__c" value={conType} label="Contract Type"></lightning-input-field>
+                        <lightning-input-field field-name="Crop_Year__c" value={cropYear} label="Crop Year" required></lightning-input-field>
+
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Variety__c" value={variety} label="Variety"></lightning-input-field>
+                        <lightning-input-field field-name="Tolerance__c" value={tolerance} label="Tolerance" required></lightning-input-field>
+                        <lightning-input-field field-name="Carry_Amount__c" value={carryAmount} label="Carry Amount"></lightning-input-field>
+                        <lightning-input-field field-name="Unit_of_Time__c" value={unitTime} label="Unit of Time"></lightning-input-field>
+                        <lightning-input-field field-name="Carry_Date_Start__c" value={carryDateStart} label="Carry Date"></lightning-input-field>
+                        <lightning-input-field field-name="Carry_Date_End__c" value={carryDateEnd} label="Carry Date"></lightning-input-field>
+
+                </div>
+        </div>
+        
+        <div class="card"><p><b>Premiums & Discounts</b></p></div>     
+
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Premium__c" value={premium} label="Premium" required></lightning-input-field>
+                        <lightning-input-field field-name="Discount__c" value={discount} label="Discount" required></lightning-input-field>
+                        <lightning-input-field field-name="Increments__c" value={increment} label="Increments" required></lightning-input-field>
+
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Payment_Terms__c" value={payTerm} label="Payment Terms" required></lightning-input-field>
+                        <lightning-input-field field-name="GST_Type__c" value={gstType} label="GST Type" required></lightning-input-field>
+                        <lightning-input-field field-name="Recipient_Created_Tax_Invoice_RCTI__c" value={recCreTaxInv} label="Recipient Created Tax Invoice (RCTI)" required></lightning-input-field>
+
+                </div>
+        </div>
+        
+       
+        <div class="card"><p><b>Area Contracted</b></p></div>     
+
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Area_hectares__c" value={areaHec} label="Area - hectares"></lightning-input-field>
+                        <lightning-input-field field-name="Yield_units_per_ha_min__c" value={yieldPerMin} label="Yield units per ha min"></lightning-input-field>
+                        <lightning-input-field field-name="Yield_units_per_ha_max__c" value={yieldPerMax} label="Yield units per ha max"></lightning-input-field>
+
+                </div>
+                <div class="slds-col">
+
+                </div>
+        </div>
+       
+        <div class="card"><p><b>Delivery & Freight Details</b></p></div>     
+
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Delivery_Terms__c" value={delTerm} label="Delivery Terms"></lightning-input-field>
+                        <lightning-input-field field-name="Freight__c" value={freight} label="Freight"></lightning-input-field>
+                        <lightning-input-field field-name="Carrier_Contact__c" value={carrCon} label="Carrier Contact"></lightning-input-field>
+                        <lightning-input-field field-name="Freight_Account__c" value={freightAcc} label="Freight Account" onchange={handleChangefreightAcc} ></lightning-input-field>
+                        <lightning-input-field field-name="Weight_Terms__c" value={weightTerm} label="Weight Terms"></lightning-input-field>
+
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Delivery_Period_Start__c" value={delPeriodStart} label="Delivery Period Start"></lightning-input-field>
+                        <lightning-input-field field-name="Delivery_Period_End__c" value={delPeriodEnd} label="Delivery Period End"></lightning-input-field>
+                        <lightning-input-field field-name="Transfer_To_Be_Done_By__c" value={tranDoneBy} label="Transfer To Be Done By"></lightning-input-field>
+                        <lightning-input-field field-name="Vendor_Declarations__c" value={vendorDecl} label="Vendor Declarations" required></lightning-input-field>
+                        <lightning-input-field field-name="Delivery_Order_CMO_No__c" value={delNo} label="Delivery/Order/CMO No."></lightning-input-field>
+
+                </div>
+        </div>
+        
+
+<div class="card"><p><b>Disclosures</b></p></div>     
+
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="A_Mortgage__c" value={aMortage} label="A Mortgage"></lightning-input-field>
+                        <lightning-input-field field-name="Registered_or_Unregistered_Security_Inte__c" value={secInterest} label="Regist. or Unregist. Security Interest"></lightning-input-field>
+                        <br>
+                        <lightning-input-field field-name="Encumbrance_or_Lien__c" value={encum} label="Encumbrance, or Lien"></lightning-input-field>
+
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Plant_Breeders_Rights__c" value={plantBreed} label="Plant Breeders Rights."></lightning-input-field>
+                       <br> <lightning-input-field field-name="End_Point_Royalties_liabilities__c" value={endPointLiability} label="End Point Royalties liabilities"></lightning-input-field>
+
+                </div>
+        </div>
+        
+        
+        <div class="card"><p><b>Trade Rules</b></p></div>     
+
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="GTA_Contract_Number__c" value={gtaConNum} label="GTA Contract Number"></lightning-input-field>
+                        <lightning-input-field field-name="Yield_units_per_ha_max__c" value={yieldPerMax} label="Yield units per ha max"></lightning-input-field>
+
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Grade_Standards__c" value={gradeStandard} label="Grade Standards"></lightning-input-field>
+
+                </div>
+        </div>
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_2-of-2">
+                        <lightning-input-field field-name="Contract_Conditions__c" value={conConditions} label="Contract Conditions"></lightning-input-field>
+                
+                </div>
+               
+        </div>
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Confirmed_BNC__c" value={conBNC} label="Confirmed BNC"></lightning-input-field>
+
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+
+                </div>
+        </div>
+
+
+        <div class="card"><p><b>Formstack Docs</b></p></div>     
+
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="GenerateSendBNCDoc__c" value={genSendBNC} label="Generate & Send BNC Doc"></lightning-input-field>
+                        <br><lightning-input-field field-name="Generate_Send_BNC_to_Buyer_Seller__c" value={genSendBNCBuyerSeller} label="Generate & Send BNC to Buyer & Seller"></lightning-input-field>
+                     
+
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Generate_BNC_Doc__c" value={genBNC} label="Generate BNC Doc"></lightning-input-field>
+                        <lightning-input-field field-name="Buyer_BNC_Doc_Link__c" value={buyerBNC} label="Buyer BNC Doc Link"></lightning-input-field>
+                        <lightning-input-field field-name="Seller_BNC_Doc_Link__c" value={sellerBNC} label="Seller BNC Doc Link"></lightning-input-field>
+
+                </div>
+        </div>
+        
+        <div class="card"><p><b>CLM Check List</b></p></div>     
+
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Signed_BNC_Received_from_Seller__c" value={signBNC} label="Signed BNC Received from Seller"></lightning-input-field>
+                        <lightning-input-field field-name="Contract_Received_from_Buyer__c" value={conRecBuyer} label="Contract Received from Buyer"></lightning-input-field>
+                        <lightning-input-field field-name="Contract_Sent_To_Seller__c" value={conSendSeller} label="Contract Sent To Seller"></lightning-input-field>
+                        <lightning-input-field field-name="Signed_Contract_Recd_From_Seller__c" value={signConRecSeller} label="Signed Contract Received From Seller"></lightning-input-field>
+                        <lightning-input-field field-name="RCTI_Bank_sent_to_Seller__c" value={bankSendSeller} label="RCTI/Bank sent to Seller"></lightning-input-field>
+                        <lightning-input-field field-name="RCTI_Bank_Details_Confirmed__c" value={bankDetCon} label="RCTI/Bank Details Confirmed"></lightning-input-field>
+                        <lightning-input-field field-name="Transaction_Type__c" value={transType} label="Transaction Type" onchange={handleChangetransType} required></lightning-input-field>
+                        <lightning-input-field field-name="Tolerance_Exceeds_Reason__c" value={update} label="Update"></lightning-input-field>
+                        <lightning-input-field field-name="Notes__c" value={notes} label="Notes"></lightning-input-field>
+                        <lightning-input-field field-name="Units_Delivered_to_Buyer__c" value={unitDelBuyer} label="Units Delivered to Buyer"></lightning-input-field>
+                        <lightning-input-field field-name="Invoice_Number__c" value={invNum} label="Invoice Number"></lightning-input-field>
+                        <lightning-input-field field-name="Invoice_Date__c" value={invDate} label="Invoice Date"></lightning-input-field>
+                        <lightning-input-field field-name="Closed_Paid__c" value={closePaid} label="Closed Paid"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                     
+        <lightning-input-field field-name="Vendor_Dec_Sent_to_Seller__c" value={vendorDecSeller} label="Vendor Dec Sent to Seller"></lightning-input-field>
+        <lightning-input-field field-name="Vendor_Dec_Received_from_Seller__c" value={venDecRecSeller} label="Vendor Dec Received from Seller"></lightning-input-field>
+        <lightning-input-field field-name="Transfer_form_Sent_to_Seller__c" value={transSentSeller} label=" Transfer form Sent to Seller"></lightning-input-field>
+        <lightning-input-field field-name="Transfer_Form_Received_from_Seller__c" value={transRecSeller} label="Transfer Form Received from Seller"></lightning-input-field>
+        <lightning-input-field field-name="Transfer_Form_Confirmed__c" value={transConfirm} label="Transfer Form Confirmed"></lightning-input-field>
+        <lightning-input-field field-name="Amount" value={comValue} label="Commission Value"></lightning-input-field>
+        <lightning-input-field field-name="Contract_Date__c" value={conDate} label="Contract Date" required></lightning-input-field>
+         
+                </div>
+        </div>
+       
+        <div class="card"><p><b>Legacy Information</b></p></div>     
+
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Legacy_Commodity__c" value={legComm} label="Legacy Commodity"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_Grade__c" value={legGrade} label="Legacy Grade"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_Farm_Region__c" value={legFarmReg} label="Legacy Farm Region"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_BNC_Sent_to_Buyer__c" value={legBNCBuyer} label="Legacy BNC Sent to Buyer"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_BNC_Sent_to_Seller__c" value={legBNCSeller} label="Legacy BNC Sent to Seller"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_Closed_Paid__c" value={legClosePaid} label="Legacy Closed Paid"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_Discount__c" value={legDisc} label="Legacy Discount"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_Signed_Contract_Received_From_Sel__c" value={legSignedRecsel} label="Legacy Signed Contract Received From Sel"></lightning-input-field>
+                        <br>
+                        <lightning-input-field field-name="Legacy_Transfer_form_Sent_to_Seller__c" value={legTransSentSeller} label="Legacy Transfer form Sent to Seller"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_Tolerance__c" value={legTolerance} label="Legacy Tolerance"></lightning-input-field>     
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Legacy_Commodity_Destinations__c" value={legComDestina} label="Legacy Commodity Destinations"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_Crop_Year__c" value={legCropYear} label="Legacy Crop Year"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_Contract_Received_from_Buyer__c" value={legConRecBuyer} label="Legacy Contract Received from Buyer"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_Contract_Sent_To_Seller__c" value={legConSentSeller} label="Legacy Contract Sent To Seller"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_RCTI_Bank_Details_Confirmed__c" value={legDetCon} label="Legacy RCTI/Bank Details Confirmed"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_RCTI_Bank_sent_to_Seller__c" value={legBankSeller} label="Legacy RCTI/Bank sent to Seller"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_Signed_BNC_Received_from_Seller__c" value={legSignBNCRecSeller} label="Legacy Signed BNC Received from Seller"></lightning-input-field>
+                        <lightning-input-field field-name="Legacy_Transfer_Form_ReceivedfromSeller__c" value={legTransRecSeller} label="Legacy Transfer Form ReceivedfromSeller"></lightning-input-field>
+                       <br> <lightning-input-field field-name="Legacy_Transfer_Form_Confirmed__c" value={legTransConfirm} label="Legacy Transfer Form Confirmed"></lightning-input-field>
+                             
+                </div>
+        </div>
+      
+        
+        
+        <div class="card"><p><b>System Information</b></p></div>     
+
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Probability" value={probability} label="Probability (%)"></lightning-input-field>
+                        <lightning-input-field field-name="Tolerance_Notification_Sent__c" value={tolNotSent} label="Tolerance Notification Sent"></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="ACT_OpportunityID__c" value={actOppId} label="ACT OpportunityID"></lightning-input-field>
+     
+                </div>
+        </div>
+       
+        <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2" style="margin-right:20px;" align="right" >
+                        <button
+                        class=" slds-button slds-button_brand"
+                        type="button"
+                        onclick={handleClose}>Cancel
+                    </button>     
+                </div>
+                <div class="slds-col slds-size_1-of-2" align="left">
+
+                        <button
+                        class="slds-button slds-button_brand"
+                        type="submit"
+                       >Save
+                    </button>        
+                </div>
+        </div>
+
+
+        </lightning-record-edit-form >
+</div>
+
+
+</template>

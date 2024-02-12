@@ -1,0 +1,134 @@
+<template>
+
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col action_margin">
+            <lightning-button-icon data-id={fullRecord.index} index={fullRecord.index} onclick={handleDelete} icon-name="utility:close" alternative-text="Remove Row"></lightning-button-icon>
+        </div>
+
+        <!-- <div class="slds-col slds-size_1-of-12">
+            <lightning-formatted-text value={fullRecord.createdDateDefaultValue}></lightning-formatted-text>
+        </div> -->
+        <div class="slds-col slds-size_2-of-12" style="margin-left: -15px;">
+            <c-quick-Cotton-object-lookup iconname="standard-account" label=""
+                error-details={fullRecord.siteErrorDetails} is-required="true" index={index} object-name="Site__c"
+                placeholder="Site" searchfield="Name" default-item={fullRecord.siteDefaultItem}
+                onselectedrec={handleSiteLookupChange}></c-quick-Cotton-object-lookup>
+            <lightning-formatted-date-time value={fullRecord.createdDateDefaultValue}></lightning-formatted-date-time>
+        </div>
+
+        <div class="slds-col slds-size_2-of-12">
+            <c-tflwc-object-bidder-contact-lookup buyer-id={buyerId} iconname="standard-account" class="row" label="" error-details={fullRecord.bidderContactErrorDetails}
+                is-required="true" object-name="Contact" index={index} options={fullRecord.biddercontactOptions}
+                placeholder="Bidders Contact" searchfield="Name" default-item={fullRecord.bidderContactDefaultValue}
+                onselectedrec={handleBidderContactChange}></c-tflwc-object-bidder-contact-lookup>
+        </div>
+
+        <div class="slds-col slds-size_2-of-12">
+            <div class={fullRecord.priceTypeErrorDetails.errorClass}>
+
+                <lightning-combobox options={fullRecord.priceTypeOptions}
+                    value={fullRecord.priceTypeDefaultValue} searchfield="Sale Origin/Destination"
+                    placeholder="Sale Origin/Destination" onchange={handlePriceTypeChange}></lightning-combobox>
+
+                <template if:true={fullRecord.priceTypeErrorDetails.isError}>
+                    <div class="slds-form-element__help">{fullRecord.priceTypeErrorDetails.errorMessage}</div>
+                </template>
+            </div>
+        </div>
+
+
+        <div class="slds-col slds-size_2-of-12">
+            <div class={fullRecord.commodityErrorDetails.errorClass}>
+                <lightning-combobox options={fullRecord.commodityOptions}
+                    placeholder="Commodity" searchfield="Name" value={fullRecord.commodityDefaultValue}
+                    onchange={handleCommodityChange}></lightning-combobox>
+                <template if:true={fullRecord.gradeErrorDetails.isError}>
+                    <div class="slds-form-element__help">{fullRecord.commodityErrorDetails.errorMessage}</div>
+                </template>
+            </div>
+        </div>
+
+        <!-- <div class="slds-col slds-size_1-of-12">
+            <div class={fullRecord.gradeErrorDetails.errorClass}>
+
+                <lightning-combobox iconname="standard-account" class="row" options={gradeOptions} placeholder="Grade"
+                    searchfield="Name" value={fullRecord.gradeDefaultValue}
+                    onchange={handleGradeChange}></lightning-combobox>
+
+                <template if:true={fullRecord.gradeErrorDetails.isError}>
+                    <div class="slds-form-element__help">{fullRecord.gradeErrorDetails.errorMessage}</div>
+                </template>
+            </div>
+        </div> -->
+
+        <div class="slds-col slds-size_1-of-12 button_icons">
+            <div class={fullRecord.cropYearErrorDetails.errorClass}>
+
+                <lightning-input type="number" name="pricechange1" class="pricechange" formatter="currency" step="0.01"
+                    value={fullRecord.price1} searchfield="Price" label="Price"
+                    placeholder="Price" onchange={handlePriceChange}></lightning-input>
+
+                <div class="price_year">23</div>
+                <template if:true={fullRecord.cropYearErrorDetails.isError}>
+                    <div class="slds-form-element__help">{fullRecord.cropYearErrorDetails.errorMessage}</div>
+                </template>
+            </div>
+        </div>
+
+        <div class="slds-col slds-size_1-of-12">
+            <div class={fullRecord.cropYearErrorDetails.errorClass}>
+
+                <lightning-input type="number" name="pricechange2" class="pricechange"
+                    value={fullRecord.price2} searchfield="Price" placeholder="Price" formatter="currency" step="0.01"
+                    label="Price" onchange={handlePriceChange}></lightning-input>
+                <div class="price_year">24</div>
+                <template if:true={fullRecord.cropYearErrorDetails.isError}>
+                    <div class="slds-form-element__help">{fullRecord.cropYearErrorDetails.errorMessage}</div>
+                </template>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-12">
+            <div class={fullRecord.cropYearErrorDetails.errorClass}>
+
+                <lightning-input type="number" name="pricechange3" class="pricechange"
+                    value={fullRecord.price3} searchfield="Price" placeholder="Price" formatter="currency" step="0.01"
+                    label="Price" onchange={handlePriceChange}></lightning-input>
+                <div class="price_year">25</div>
+                <template if:true={fullRecord.cropYearErrorDetails.isError}>
+                    <div class="slds-form-element__help">{fullRecord.cropYearErrorDetails.errorMessage}</div>
+                </template>
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-12">
+            <div class={fullRecord.cropYearErrorDetails.errorClass}>
+
+                <lightning-input type="number" name="pricechange4" class="pricechange"
+                    value={fullRecord.price4} searchfield="Price" placeholder="Price" formatter="currency" step="0.01"
+                    label="Price" onchange={handlePriceChange}></lightning-input>
+                <div class="price_year">26</div>
+                <template if:true={fullRecord.cropYearErrorDetails.isError}>
+                    <div class="slds-form-element__help">{fullRecord.cropYearErrorDetails.errorMessage}</div>
+                </template>
+            </div>
+        </div>
+
+
+        <div class="slds-col slds-size_1-of-12">
+
+                <lightning-input name="priceChange" class="pricechange"
+                    value={fullRecord.adjustmentValue2} searchfield="Price Change" placeholder=""
+                    label="Adjustment" disabled={fullRecord.adjustmentDisabled} onchange={handlePriceChangeUpdate}></lightning-input>
+                <!-- <div class="price_year">{fullRecord.adjustmentValue2}</div> -->
+        </div>
+
+       
+            <div class="slds-col slds-size_4-of-12 action_margin">
+                <lightning-button-icon data-id={fullRecord.index} index={fullRecord.index} onclick={handleAdd} icon-name="utility:add" alternative-text="Add Blank Row"></lightning-button-icon> &nbsp;
+                <lightning-button-icon data-id={fullRecord.index} index={fullRecord.index} onclick={handleSiteAdd} icon-name="utility:copy" alternative-text="Copy Base Site Row"></lightning-button-icon> &nbsp;
+                <lightning-button-icon data-id={fullRecord.index} index={fullRecord.index} onclick={handleDelete} icon-name="utility:close" alternative-text="Remove Row"></lightning-button-icon> &nbsp;
+                <lightning-button-icon data-id={fullRecord.index} index={fullRecord.index} onclick={handleExcluded} icon-name="utility:ban" alternative-text="Exclude Row"></lightning-button-icon> &nbsp; 
+            </div>
+        </div>
+
+
+</template>

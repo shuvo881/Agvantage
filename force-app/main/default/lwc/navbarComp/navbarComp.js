@@ -1,6 +1,8 @@
 import { LightningElement, track } from 'lwc';
 import Logo from '@salesforce/resourceUrl/Logo';
 import Banners from '@salesforce/resourceUrl/banner_imgs';
+import SearchIcon from '@salesforce/resourceUrl/search_bar_img';
+
 //import bootstrap from '@salesforce/resourceUrl/bootstrap_community';
 // Example :- import TRAILHEAD_LOGO from '@salesforce/resourceUrl/trailhead_logo';'
 export default class NavbarComp extends LightningElement {
@@ -10,6 +12,8 @@ export default class NavbarComp extends LightningElement {
     @track company_Banner_1 = Banners + '/banner/banner1.jpg';
     @track company_Banner_2 = Banners + '/banner/banner2.jpg';
     @track company_Banner_3 = Banners + '/banner/banner3.jpg';
+
+    @track SearchIcon = SearchIcon + '/search_bar_img/search.png';
     
     
     

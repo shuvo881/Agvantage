@@ -1,0 +1,8 @@
+ul.custom-dots {
+    list-style-type: disc; /* Use 'disc' for filled circles */
+}
+
+/* Adjust the size of the dots */
+ul.custom-dots li {
+    line-height: 1.5; /* Adjust the line height for spacing */
+}

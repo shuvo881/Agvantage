@@ -49,11 +49,14 @@
             </div>
             <a href="#">Contact Us</a>
             <a href="#">Links</a>
-            <form action="#" class="search-container">
-                <input type="text" class="search-input" placeholder="Search...">
-                <lightning-icon icon-name="utility:search" alternative-text="S" class="search-icon"></lightning-icon>
-                <!-- <svg class=""><use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use></svg> -->
-            </form>
+            <div class="search-container">
+                <form action="#" class="searchForm">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <button type="submit"><img class="search-icon" src={SearchIcon} alt=""></button>
+                </form>
+            </div>
         </div>
     </nav>
+
+    
 </template>

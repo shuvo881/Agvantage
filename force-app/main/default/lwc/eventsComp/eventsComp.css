@@ -1,0 +1,21 @@
+/* not null */
+:host{
+    --company_color: #004878;
+    --hover_color: #002f4e;
+}
+.border{
+    border: 0.1rem solid var(--company_color);
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+@media only screen and (max-width: 480px) {
+    .border{
+        font-size: 1rem;
+    }
+}
+@media only screen and (max-width: 780px) {
+    .border{
+        font-size: 1rem;
+    }
+}

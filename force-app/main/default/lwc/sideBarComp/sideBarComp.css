@@ -1,0 +1,50 @@
+/* not null */
+:host{
+    --company_color: #004878;
+    --hover_color: #002f4e;
+}
+
+.slds-grid{
+    background-color: white;
+    
+}
+.slds-col{
+    background-color: var(--company_color);
+    color: whitesmoke;
+    font-weight: bold;
+    opacity: 0.9;
+    transition: 0.3s;
+}
+.slds-col:hover{
+    background-color: var(--hover_color);
+    opacity: 1.1;
+}
+.followUs{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: black;
+}
+.weather{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: black;
+}
+.subscribe{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+a {
+    color: inherit; /* This will inherit the color from its parent element */
+    text-decoration: none; /* This removes the default underline */
+}
+@media only screen and (max-width: 480px) {
+    
+}
+
+@media only screen and (max-width: 780px) {
+
+}

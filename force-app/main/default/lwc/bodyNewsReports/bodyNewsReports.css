@@ -1,0 +1,13 @@
+/* not nulk */
+.box {
+    /* border: 1rem solid #ccc; */
+    /* Add shadow */
+    border-radius: 0.5rem;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.box:hover {
+    /* Add hover effect */
+    box-shadow: 0 10rem 16rem rgba(0, 0, 0, 0.5);
+}

@@ -1,0 +1,167 @@
+/* not null */
+/* not null */
+:host{
+    --company_color: #004878;
+    --hover_color: #002f4e;
+}
+
+.body1{
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: left;
+}
+.body1B{
+    font-weight: bolder;
+    color: var(--company_color);
+}
+.body2{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.body3{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: left;
+}
+.body4{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: left;
+}
+.body5{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    font-size: 2rem;
+    text-align: left;
+}
+.body6{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: left;
+}
+.body7{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: left;
+}
+.body8{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: left;
+}
+.body9{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: left;
+}
+.border{
+    border: 0.1rem solid var(--company_color);
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+}
+.text{
+    margin: 0.1rem;
+}
+.standAlone1{
+    margin-top: 0.5rem;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--company_color);
+}
+.standAlone2{
+    margin-top: 0.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--company_color);
+}
+
+@media only screen and (max-width: 780px) {
+    .body1{
+        font-size: 1rem;
+    }
+    .body2{
+        font-size: 0.8rem;
+    }
+    .body3{
+        font-size: 0.8rem;
+    }
+    .body4{
+        font-size: 0.8rem;
+    }
+    .body5{
+        font-size: 1rem;
+    }
+    .body6{
+        font-size: 0.8rem;
+    }.body7{
+        font-size: 0.8rem;
+    }.body8{
+        font-size: 0.8rem;
+    }.body9{
+        font-size: 0.8rem;
+    }
+    .border{
+        font-size: 0.8rem;
+    }
+    .standAlone1{
+        font-size: 0.8rem;
+    }
+    .standAlone2{
+        font-size: 0.8rem;
+    }
+}
+@media only screen and (max-width: 480px) {
+    .body1{
+        font-size: 0.8rem;
+    }
+    .body2{
+        font-size: 0.8rem;
+    }
+    .body3{
+        font-size: 0.8rem;
+    }
+    .body4{
+        font-size: 0.8rem;
+    }
+    .body5{
+        font-size: 1rem;
+    }
+    .body6{
+        font-size: 0.8rem;
+    }.body7{
+        font-size: 0.8rem;
+    }.body8{
+        font-size: 0.8rem;
+    }.body9{
+        font-size: 0.8rem;
+    }
+    .border{
+        font-size: 1rem;
+    }
+    .standAlone1{
+        font-size: 0.8rem;
+    }
+    .standAlone2{
+        font-size: 0.8rem;
+    }
+}

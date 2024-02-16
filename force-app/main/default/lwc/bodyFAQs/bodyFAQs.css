@@ -1,0 +1,27 @@
+/* notnull */
+.question{
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-align: left;
+}
+.answer{
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: left;
+}
+@media only screen and (max-width: 480px) {
+    .question{
+        font-size: 1rem;
+    }
+    .answer{
+        font-size: .8rem;
+    } 
+}
+@media only screen and (max-width: 780px) {
+    .question{
+        font-size: 1rem;
+    }
+    .answer{
+        font-size: .8rem;
+    } 
+}

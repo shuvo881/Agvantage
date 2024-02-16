@@ -1,0 +1,15 @@
+:host{
+    --company_color: #004878;
+    --hover_color: #002f4e;
+}
+.followUs{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: black;
+}
+.subscribe{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}

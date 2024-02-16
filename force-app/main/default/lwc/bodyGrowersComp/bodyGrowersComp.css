@@ -1,0 +1,125 @@
+.custom-bullet {
+    display: inline-block;
+    width: 1em;
+    margin-right: 0.5em;
+    text-align: center;
+    list-style: none;
+    font-size: 1.5em;
+}
+
+:host{
+    --company_color: #004878;
+    --hover_color: #002f4e;
+}
+
+.body1{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center;
+}
+.body2{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.body3{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+}
+.body4{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+}
+.body5{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+}
+.border{
+    border: 0.1rem solid var(--company_color);
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+}
+.text{
+    font-size: 1rem;
+    font-weight: 500;
+}
+.standAlone1{
+    margin-top: 0.5rem;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--company_color);
+}
+.standAlone2{
+    margin-top: 0.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--company_color);
+}
+
+@media only screen and (max-width: 780px) {
+    .body1{
+        font-size: 1rem;
+    }
+    .body2{
+        font-size: 0.8rem;
+    }
+    .body3{
+        font-size: 0.8rem;
+    }
+    .body4{
+        font-size: 0.8rem;
+    }
+    .body5{
+        font-size: 0.8rem;
+    }
+    .border{
+        font-size: 0.8rem;
+    }
+    .standAlone1{
+        font-size: 0.8rem;
+    }
+    .standAlone2{
+        font-size: 0.8rem;
+    }
+}
+@media only screen and (max-width: 480px) {
+    .body1{
+        font-size: 0.8rem;
+    }
+    .body2{
+        font-size: 0.8rem;
+    }
+    .body3{
+        font-size: 0.8rem;
+    }
+    .body4{
+        font-size: 0.8rem;
+    }
+    .body5{
+        font-size: 0.8rem;
+    }
+    .border{
+        font-size: 1rem;
+    }
+    .standAlone1{
+        font-size: 0.8rem;
+    }
+    .standAlone2{
+        font-size: 0.8rem;
+    }
+}

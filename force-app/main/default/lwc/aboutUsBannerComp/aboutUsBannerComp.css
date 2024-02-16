@@ -1,0 +1,18 @@
+.image-text {
+      position: absolute;
+      top: 78%;
+      left: 9%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 50px;
+      font-weight: bold;
+      text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .image-text {
+    top: 60%;
+    left: 14%;
+    font-size: 12px;
+  }
+}
